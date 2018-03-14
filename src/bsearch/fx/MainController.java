@@ -163,6 +163,10 @@ public class MainController implements Initializable {
 	private Button sa_helpSearchSpaceRepresentationButton;
 	@FXML
 	private Button sa_helpSearchMethodButton;
+	
+	// components in info tab start with i_
+	@FXML
+	private TextArea i_textArea;
 
 
 	// other components that not in GUI
