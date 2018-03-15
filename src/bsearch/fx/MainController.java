@@ -519,6 +519,8 @@ public class MainController implements Initializable {
 		sa_evaluationLimitField.setText(Integer.toString(protocol.searchAlgorithmInfo.evaluationLimit));
 		lastSavedText = protocol.toJSONString(); 
 		runOptions = null;  //runOptions get reset to defaults when a different Protocol is loaded
+		
+		i_textArea.setText("Write notes here..."); //TODO connect with SearchProtocolInfo
 	}
 
 	private SearchProtocolInfo createProtocolFromFormData() throws UIConstraintException {
@@ -604,7 +606,7 @@ public class MainController implements Initializable {
 				sa_searchMethodBox.getValue().toString(),
 				searchMethodParams, 
 				sa_chromosomeTypeBox.getValue().toString(),
-				sa_cachingCheckBox.isSelected(), evaluationLimit);
+				sa_cachingCheckBox.isSelected(), evaluationLimit, i_textArea.getText());
 
 		return protocol;
 	}

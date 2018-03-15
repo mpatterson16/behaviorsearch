@@ -80,7 +80,7 @@ public strictfp class SearchProtocolInfo
 			HashMap<String, String> searchMethodParams,
 			String chromosomeType,
 			boolean caching,
-			int evaluationLimit) {
+			int evaluationLimit, String infoTab) {
 		super();
 		this.bsearchVersionNumber = GeneralUtils.getVersionNumber();
 		this.infoTab = "Write notes here...";

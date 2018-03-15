@@ -374,7 +374,7 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <TextArea fx:id="i_textArea" layoutX="63.0" layoutY="60.0" prefHeight="200.0" prefWidth="590.0" />
-                        <Label layoutX="278.0" layoutY="23.0" text="Behavior Information">
+                        <Label layoutX="286.0" layoutY="24.0" text="Model Information">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
