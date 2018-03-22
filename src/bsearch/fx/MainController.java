@@ -172,7 +172,7 @@ public class MainController implements Initializable {
 
 	// other components that not in GUI
 	private File defaultUserDocumentsFolder = new FileChooser().getInitialDirectory();
-	private String defaultProtocolXMLForNewSearch;
+	private String defaultProtocolJSONForNewSearch;
 	private HashMap<String, SearchMethod> searchMethodChoices = new HashMap<String, SearchMethod>();
 	private File currentFile;
 	private String lastSavedText;
@@ -257,10 +257,10 @@ public class MainController implements Initializable {
 
 		// set up field that not in GUI
 		try {
-			defaultProtocolXMLForNewSearch = GeneralUtils
-					.stringContentsOfFile(GeneralUtils.getResource("defaultNewSearch.xml"));
+			defaultProtocolJSONForNewSearch = GeneralUtils
+					.stringContentsOfFile(GeneralUtils.getResource("defaultNewSearch.bsearch2"));
 		} catch (java.io.FileNotFoundException ex) {
-			handleError("Error: file missing!","Cannot find defaultNewSearch.xml", null);
+			handleError("Error: file missing!","Cannot find defaultNewSearch.bsearch2", null);
 			System.exit(1);
 		}
 		actionNew();
@@ -408,19 +408,9 @@ public class MainController implements Initializable {
 		"[\"choiceParameter\" \"near\" \"far\"] \n");
 		 
 		SearchProtocolInfo protocol;
-		try {
-			protocol = SearchProtocolInfo.loadOldXML(defaultProtocolXMLForNewSearch);
-			loadProtocol(protocol);
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new IllegalStateException("Error loading default XML protocol to initialize UI!");
-		} catch (SAXException e) {
-			e.printStackTrace();
-			throw new IllegalStateException("Error loading default XML protocol to initialize UI!");
-		}
-
+		protocol = SearchProtocolInfo.loadFromJSONString(defaultProtocolJSONForNewSearch);
+		loadProtocol(protocol);
 		updateWindowTitle("Untitled");
-
 	}
 
 	public void actionOpen() {
@@ -666,7 +656,7 @@ public class MainController implements Initializable {
 	
 
 	public boolean protocolChangedSinceLastSave() {
-		String xmlStr = "";
+		String jsonStr = "";
 		// Note: lastSavedText == null ONLY when the GUI is being loaded for the
 				// first time.
 		if(lastSavedText==null){
@@ -674,31 +664,15 @@ public class MainController implements Initializable {
 		}
 		try {
 			
-			xmlStr = createProtocolFromFormData().toJSONString();
+			jsonStr = createProtocolFromFormData().toJSONString();
 		} catch (UIConstraintException ex) {
 			// if we can't create a valid protocol object from the form data,
 			// assume the user has changed something...
 			return true;
 		}
 
-		Scanner in = null;
-		String startData = "";
-		try {
-			in = new Scanner(new File(GeneralUtils.attemptResolvePathFromBSearchRoot("experiments/startingdata.bsearch")));
-			while(in.hasNextLine()) {
-				startData = startData + in.nextLine();
-				if(in.hasNextLine()) {
-					startData = startData + "\n";
-				}
-			}
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		if(!xmlStr.equals(startData)) {
-			return !lastSavedText.equals(xmlStr);
-		}
-		return false;
+		return !lastSavedText.equals(jsonStr);
+		
 	}
 
 	boolean checkDiscardOkay() {
