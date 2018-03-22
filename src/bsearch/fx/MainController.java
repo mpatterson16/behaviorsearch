@@ -612,7 +612,7 @@ public class MainController implements Initializable {
 
 	public void actionSaveAs() {
 		FileChooser chooser = new FileChooser();
-		chooser.getExtensionFilters().addAll(new ExtensionFilter("bsearch File", "*.bsearch"));
+		chooser.getExtensionFilters().addAll(new ExtensionFilter("bsearch v2 File", "*.bsearch2"));
 
 		
 		File parentFolder = null;
@@ -621,7 +621,7 @@ public class MainController implements Initializable {
 			chooser.setInitialFileName(currentFile.getName());
 		} else {
 			parentFolder = new File(browseModelField.getText()).getParentFile();
-			chooser.setInitialFileName("Untitled.bsearch");
+			chooser.setInitialFileName("Untitled.bsearch2");
 		}
 		if (parentFolder != null && parentFolder.exists()) {
 			chooser.setInitialDirectory(parentFolder);
