@@ -1,0 +1,21 @@
+Components Without Tooltips
+
+m_modelStepField				"NetLogo command to be run each step, e.g. 'go'"
+m_modelStepLimitField			"Limit on the maximum number of steps that can run"
+m_modelStopConditionField		"Condition on which the model should stop"
+m_modelSetupField				"NetLogo command to setup the model, e.g. 'setup'"
+
+dc_rawMeasuresArea				
+dc_condensingMeasuresArea
+
+so_objectiveTypeBox				
+so_combineReplicatesField
+so_objectiveNameField
+so_objectiveChoiceList
+
+sa_searchMethodBox
+sa_paramCol						
+sa_valCol
+sa_chromosomeTypeBox
+
+i_textArea

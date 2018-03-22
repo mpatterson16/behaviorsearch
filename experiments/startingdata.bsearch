@@ -1,0 +1,48 @@
+{
+  "bsearchVersionNumber": 2.0,
+  "infoTab": "Write notes here...",
+  "modelDCInfo": {
+    "modelFileName": "Some Model.nlogo",
+    "setupCommands": "setup",
+    "stepCommands": "go",
+    "stopCondition": "count turtles > 1000",
+    "measureIfReporter": "@DONE",
+    "maxModelSteps": 100,
+    "rawMeasureReporters": {
+      "RAW1": "mean [energy] of turtles"
+    },
+    "singleRunCondenserReporters": {
+      "CONDENSED1": "last @{RAW1}"
+    },
+    "fitnessSamplingReplications": 10,
+    "bestCheckingNumReplications": 0
+  },
+  "paramSpecStrings": [
+    "[\"integerParameter\" [0 1 10]]",
+    "[\"continuousParameter\" [0.0 \"C\" 1.0]]",
+    "[\"choiceParameter\" \"near\" \"far\"]"
+  ],
+  "objectives": [
+    {
+      "name": "objective1",
+      "objectiveType": "MAXIMIZE",
+      "fitnessCombineReplications": "mean @{CONDENSED1}",
+      "fitnessDerivativeParameter": "",
+      "fitnessDerivativeDelta": 0.0,
+      "fitnessDerivativeUseAbs": false
+    }
+  ],
+  "searchAlgorithmInfo": {
+    "searchMethodType": "StandardGA",
+    "searchMethodParams": {
+      "mutation-rate": "0.03",
+      "population-size": "50",
+      "crossover-rate": "0.7",
+      "population-model": "generational",
+      "tournament-size": "3"
+    },
+    "chromosomeType": "GrayBinaryChromosome",
+    "caching": true,
+    "evaluationLimit": 300
+  }
+}

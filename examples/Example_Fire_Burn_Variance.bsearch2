@@ -1,6 +1,6 @@
 {
   "bsearchVersionNumber": 2.0,
-  "infoTab": "Write notes here...",
+  "infoTab": "The goal of this experiment is to find the density at which there is the most variance in how much of the forest gets burnt.",
   "modelDCInfo": {
     "modelFileName": "../../models/Sample Models/Earth Science/Fire.nlogo",
     "setupCommands": "setup",

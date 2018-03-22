@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import javax.swing.SwingUtilities;
@@ -520,7 +521,7 @@ public class MainController implements Initializable {
 		lastSavedText = protocol.toJSONString(); 
 		runOptions = null;  //runOptions get reset to defaults when a different Protocol is loaded
 		
-		i_textArea.setText("Write notes here..."); //TODO connect with SearchProtocolInfo
+		i_textArea.setText(protocol.infoTab);
 	}
 
 	private SearchProtocolInfo createProtocolFromFormData() throws UIConstraintException {
@@ -679,9 +680,25 @@ public class MainController implements Initializable {
 			// assume the user has changed something...
 			return true;
 		}
-		
-		return !lastSavedText.equals(xmlStr);
-		
+
+		Scanner in = null;
+		String startData = "";
+		try {
+			in = new Scanner(new File(GeneralUtils.attemptResolvePathFromBSearchRoot("experiments/startingdata.bsearch")));
+			while(in.hasNextLine()) {
+				startData = startData + in.nextLine();
+				if(in.hasNextLine()) {
+					startData = startData + "\n";
+				}
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if(!xmlStr.equals(startData)) {
+			return !lastSavedText.equals(xmlStr);
+		}
+		return false;
 	}
 
 	boolean checkDiscardOkay() {

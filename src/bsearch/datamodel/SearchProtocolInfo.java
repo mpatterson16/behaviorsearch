@@ -83,7 +83,7 @@ public strictfp class SearchProtocolInfo
 			int evaluationLimit, String infoTab) {
 		super();
 		this.bsearchVersionNumber = GeneralUtils.getVersionNumber();
-		this.infoTab = "Write notes here...";
+		this.infoTab = infoTab;
 		
 		
 		this.modelDCInfo = new ModelDataCollectionInfo(modelFile, modelStepLimit, modelSetupCommands, modelStepCommands,
