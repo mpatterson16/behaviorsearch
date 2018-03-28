@@ -101,7 +101,7 @@ public class MainController implements Initializable {
 	@FXML
 	private TextField m_modelStopConditionField;
 	@FXML
-	private NumberField m_modelStepLimitField;
+	private TextField m_modelStepLimitField;
 	@FXML
 	private TextField m_measureIfField;
 
@@ -111,9 +111,9 @@ public class MainController implements Initializable {
 	@FXML
 	private TextArea dc_condensingMeasuresArea;
 	@FXML
-	private NumberField dc_fitnessSamplingRepetitionsField;
+	private TextField dc_fitnessSamplingRepetitionsField;
 	@FXML
-	private NumberField dc_bestCheckingField;
+	private TextField dc_bestCheckingField;
 
 	
 	// components in Search Objective tab will start with so_
@@ -135,7 +135,7 @@ public class MainController implements Initializable {
 	@FXML
 	private CheckBox so_takeDerivativeCheckBox;
 	@FXML
-	private NumberField so_deltaField;
+	private TextField so_deltaField;
 	@FXML
 	private Label so_wrtLabel;
 	@FXML
@@ -153,7 +153,7 @@ public class MainController implements Initializable {
 	@FXML
 	private CheckBox sa_cachingCheckBox;
 	@FXML
-	private NumberField sa_evaluationLimitField;
+	private TextField sa_evaluationLimitField;
 	@FXML
 	private TableView<SearchMethodParamTableRow> sa_searchMethodTable;
 	@FXML
@@ -185,6 +185,56 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		m_modelStepLimitField.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("[0-9.]*")) {
+		            m_modelStepLimitField.setText(newValue.replaceAll("[^0-9.]*", ""));
+		        }
+		    }
+		});
+		
+		dc_fitnessSamplingRepetitionsField.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("[0-9.]*")) {
+		            dc_fitnessSamplingRepetitionsField.setText(newValue.replaceAll("[^0-9.]*", ""));
+		        }
+		    }
+		});
+		
+		dc_bestCheckingField.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("[0-9.]*")) {
+		            dc_bestCheckingField.setText(newValue.replaceAll("[^0-9.]*", ""));
+		        }
+		    }
+		});
+		
+		so_deltaField.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("[0-9.]*")) {
+		            so_deltaField.setText(newValue.replaceAll("[^0-9.]*", ""));
+		        }
+		    }
+		});
+		
+		sa_evaluationLimitField.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("[0-9.]*")) {
+		            sa_evaluationLimitField.setText(newValue.replaceAll("[^0-9.]*", ""));
+		        }
+		    }
+		});
 		
 		// set up ChoiceBox in SO tab
 		List<String> goalChoices = Arrays.stream(OBJECTIVE_TYPE.values()).map(obj->obj.toString()).collect(Collectors.toList());
