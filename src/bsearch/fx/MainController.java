@@ -101,7 +101,7 @@ public class MainController implements Initializable {
 	@FXML
 	private TextField m_modelStopConditionField;
 	@FXML
-	private TextField m_modelStepLimitField;
+	private NumberField m_modelStepLimitField;
 	@FXML
 	private TextField m_measureIfField;
 
@@ -111,9 +111,9 @@ public class MainController implements Initializable {
 	@FXML
 	private TextArea dc_condensingMeasuresArea;
 	@FXML
-	private TextField dc_fitnessSamplingRepetitionsField;
+	private NumberField dc_fitnessSamplingRepetitionsField;
 	@FXML
-	private TextField dc_bestCheckingField;
+	private NumberField dc_bestCheckingField;
 
 	
 	// components in Search Objective tab will start with so_
@@ -135,7 +135,7 @@ public class MainController implements Initializable {
 	@FXML
 	private CheckBox so_takeDerivativeCheckBox;
 	@FXML
-	private TextField so_deltaField;
+	private NumberField so_deltaField;
 	@FXML
 	private Label so_wrtLabel;
 	@FXML
@@ -153,7 +153,7 @@ public class MainController implements Initializable {
 	@FXML
 	private CheckBox sa_cachingCheckBox;
 	@FXML
-	private TextField sa_evaluationLimitField;
+	private NumberField sa_evaluationLimitField;
 	@FXML
 	private TableView<SearchMethodParamTableRow> sa_searchMethodTable;
 	@FXML
