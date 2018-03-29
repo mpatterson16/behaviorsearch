@@ -186,55 +186,12 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		m_modelStepLimitField.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		        if (!newValue.matches("[0-9.]*")) {
-		            m_modelStepLimitField.setText(newValue.replaceAll("[^0-9.]*", ""));
-		        }
-		    }
-		});
-		
-		dc_fitnessSamplingRepetitionsField.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		        if (!newValue.matches("[0-9.]*")) {
-		            dc_fitnessSamplingRepetitionsField.setText(newValue.replaceAll("[^0-9.]*", ""));
-		        }
-		    }
-		});
-		
-		dc_bestCheckingField.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		        if (!newValue.matches("[0-9.]*")) {
-		            dc_bestCheckingField.setText(newValue.replaceAll("[^0-9.]*", ""));
-		        }
-		    }
-		});
-		
-		so_deltaField.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		        if (!newValue.matches("[0-9.]*")) {
-		            so_deltaField.setText(newValue.replaceAll("[^0-9.]*", ""));
-		        }
-		    }
-		});
-		
-		sa_evaluationLimitField.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		        if (!newValue.matches("[0-9.]*")) {
-		            sa_evaluationLimitField.setText(newValue.replaceAll("[^0-9.]*", ""));
-		        }
-		    }
-		});
+		//set up number fields
+		initializeNumberField(m_modelStepLimitField, false);
+		initializeNumberField(dc_fitnessSamplingRepetitionsField, false);
+		initializeNumberField(dc_bestCheckingField, false);
+		initializeNumberField(so_deltaField, true);
+		initializeNumberField(sa_evaluationLimitField, false);
 		
 		// set up ChoiceBox in SO tab
 		List<String> goalChoices = Arrays.stream(OBJECTIVE_TYPE.values()).map(obj->obj.toString()).collect(Collectors.toList());
@@ -317,6 +274,26 @@ public class MainController implements Initializable {
 
 		//Platform.runLater( () -> openFile(new File("test/MiniFireVariance.bsearch")));
 	}	
+	
+	// based on code by Evan Knowles 
+	// https://stackoverflow.com/questions/7555564/what-is-the-recommended-way-to-make-a-numeric-textfield-in-javafx
+	public void initializeNumberField(TextField field, boolean allowDouble) {
+		field.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		    	if(allowDouble) {
+		    		if (!newValue.matches("[0-9.]*")) {
+		    			field.setText(newValue.replaceAll("[^0-9.]*", ""));
+		    		}
+		    	} else {
+		    		if (!newValue.matches("[0-9]*")) {
+			            field.setText(newValue.replaceAll("[^0-9]*", ""));
+			        }
+		    	}
+		    }
+		});
+	}
 	
 	public void helpDialog(String title, String content){
 		Alert alert = new Alert(AlertType.INFORMATION);
