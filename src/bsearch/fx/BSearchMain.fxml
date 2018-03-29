@@ -114,15 +114,27 @@
                      <right>
                         <AnchorPane prefHeight="319.0" prefWidth="298.0" BorderPane.alignment="CENTER">
                            <children>
-                              <TextField fx:id="m_modelStepField" layoutX="88.0" layoutY="89.0" prefHeight="25.0" prefWidth="194.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="89.0" />
+                              <TextField fx:id="m_modelStepField" layoutX="88.0" layoutY="89.0" prefHeight="25.0" prefWidth="194.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="89.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]NetLogo command to be run each step, e.g. &quot;go&quot;" />
+                                 </tooltip></TextField>
                               <Label layoutX="157.0" layoutY="128.0" text="model steps" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="128.0" />
-                              <TextField fx:id="m_modelStepLimitField" layoutX="88.0" layoutY="123.0" prefHeight="25.0" prefWidth="60.0" AnchorPane.rightAnchor="157.0" AnchorPane.topAnchor="123.0" />
-                              <TextField fx:id="m_modelStopConditionField" layoutX="88.0" layoutY="159.0" prefHeight="25.0" prefWidth="194.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="159.0" />
+                              <TextField fx:id="m_modelStepLimitField" layoutX="88.0" layoutY="123.0" prefHeight="25.0" prefWidth="60.0" AnchorPane.rightAnchor="157.0" AnchorPane.topAnchor="123.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]Limit on the maximum number of steps that can run" />
+                                 </tooltip></TextField>
+                              <TextField fx:id="m_modelStopConditionField" layoutX="88.0" layoutY="159.0" prefHeight="25.0" prefWidth="194.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="159.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]Condition on which the model should stop" />
+                                 </tooltip></TextField>
                               <TextField fx:id="m_measureIfField" layoutX="88.0" layoutY="191.0" prefHeight="25.0" prefWidth="194.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="191.0">
                                  <tooltip>
                                     <Tooltip text="e.g. &quot;(ticks mod 100) = 0&quot;, or &quot;member? ticks [50 100 200]&quot;" />
                                  </tooltip></TextField>
-                              <TextField fx:id="m_modelSetupField" layoutX="88.0" layoutY="55.0" prefHeight="25.0" prefWidth="195.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="55.0" />
+                              <TextField fx:id="m_modelSetupField" layoutX="88.0" layoutY="55.0" prefHeight="25.0" prefWidth="195.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="55.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]NetLogo command to setup the model, e.g. &quot;setup&quot;" />
+                                 </tooltip></TextField>
                               <Label layoutX="6.0" layoutY="126.0" text="Step limit: " AnchorPane.rightAnchor="224.0" AnchorPane.topAnchor="126.0">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
@@ -168,7 +180,10 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="dc_rawMeasuresArea" layoutX="14.0" layoutY="68.0" prefHeight="206.0" prefWidth="346.0" />
+                        <TextArea fx:id="dc_rawMeasuresArea" layoutX="14.0" layoutY="68.0" prefHeight="206.0" prefWidth="346.0">
+                           <tooltip>
+                              <Tooltip text="[placeholder]" />
+                           </tooltip></TextArea>
                         <Label layoutX="413.0" layoutY="37.0" text="Condensing measures for each run">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -184,7 +199,10 @@
                               <Font size="12.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="dc_condensingMeasuresArea" layoutX="413.0" layoutY="68.0" prefHeight="155.0" prefWidth="259.0" />
+                        <TextArea fx:id="dc_condensingMeasuresArea" layoutX="413.0" layoutY="68.0" prefHeight="155.0" prefWidth="259.0">
+                           <tooltip>
+                              <Tooltip text="[placeholder]" />
+                           </tooltip></TextArea>
                         <Label layoutX="406.0" layoutY="286.0" text="Best-checking: ">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -239,7 +257,10 @@
                                     <Tooltip text="Which parameter should be varied by a small amount to see how much change results?" />
                                  </tooltip>
                               </ChoiceBox>
-                              <ChoiceBox fx:id="so_objectiveTypeBox" layoutX="181.0" layoutY="105.0" prefWidth="150.0" />
+                              <ChoiceBox fx:id="so_objectiveTypeBox" layoutX="181.0" layoutY="105.0" prefWidth="150.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]" />
+                                 </tooltip></ChoiceBox>
                               <CheckBox fx:id="so_fitnessDerivativeUseAbsCheckBox" disable="true" layoutX="181.0" layoutY="220.0" mnemonicParsing="false" text="Use ABS value of derivative?">
                                  <tooltip>
                                     <Tooltip text="You might want to take the absolute value if you don't care about the direction of the measured change... e.g., for trying to find phase transitions" />
@@ -263,19 +284,28 @@
                                     <Tooltip text="Help about Evaluation" />
                                  </tooltip>
                               </Button>
-                              <TextField fx:id="so_combineReplicatesField" layoutX="205.0" layoutY="172.0" prefHeight="26.0" prefWidth="226.0" />
+                              <TextField fx:id="so_combineReplicatesField" layoutX="205.0" layoutY="172.0" prefHeight="26.0" prefWidth="226.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]" />
+                                 </tooltip></TextField>
                               <Label layoutX="60.0" layoutY="69.0" text="Objective name:">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="so_objectiveNameField" layoutX="181.0" layoutY="64.0" prefHeight="26.0" prefWidth="201.0" />
+                              <TextField fx:id="so_objectiveNameField" layoutX="181.0" layoutY="64.0" prefHeight="26.0" prefWidth="201.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]" />
+                                 </tooltip></TextField>
                               <Label layoutX="10.0" layoutY="190.0" text=" (combines replicate runs)" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="so_objectiveChoiceList" layoutX="26.0" layoutY="51.0" prefHeight="187.0" prefWidth="200.0" />
+                              <ListView fx:id="so_objectiveChoiceList" layoutX="26.0" layoutY="51.0" prefHeight="187.0" prefWidth="200.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]" />
+                                 </tooltip></ListView>
                               <Button fx:id="so_addObjectiveButton" layoutX="26.0" layoutY="247.0" mnemonicParsing="false" onAction="#actionAddNewObjective" prefHeight="51.0" prefWidth="98.0" text="ADD NEW Objective" textAlignment="CENTER" wrapText="true" />
                               <Button fx:id="so_removeObjectiveButton" layoutX="141.0" layoutY="247.0" mnemonicParsing="false" onAction="#actionRemoveObjective" prefHeight="48.0" prefWidth="85.0" text="REMOVE Objective" textAlignment="CENTER" wrapText="true" />
                               <Label layoutX="27.0" layoutY="23.0" text="Choose objective to edit:">
@@ -311,6 +341,9 @@
                                        <FlowPane.margin>
                                           <Insets left="10.0" />
                                        </FlowPane.margin>
+                                       <tooltip>
+                                          <Tooltip text="[placeholder]" />
+                                       </tooltip>
                                     </ChoiceBox>
                                     <Button fx:id="sa_helpSearchMethodButton" mnemonicParsing="false" onAction="#helpSearchMethodAction" text="?">
                                        <FlowPane.margin>
@@ -334,7 +367,10 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <ChoiceBox fx:id="sa_chromosomeTypeBox" layoutX="17.0" layoutY="48.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="17.0" />
+                              <ChoiceBox fx:id="sa_chromosomeTypeBox" layoutX="17.0" layoutY="48.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="17.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]" />
+                                 </tooltip></ChoiceBox>
                               <Button fx:id="sa_helpSearchSpaceRepresentationButton" layoutX="219.0" layoutY="48.0" mnemonicParsing="false" onAction="#helpSearchSpaceRepresentationAction" text="?" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="219.0">
                                  <tooltip>
                                     <Tooltip text="Help about this Search Space Representation" />
@@ -367,6 +403,9 @@
                            <BorderPane.margin>
                               <Insets left="5.0" right="5.0" top="5.0" />
                            </BorderPane.margin>
+                           <tooltip>
+                              <Tooltip text="[placeholder]" />
+                           </tooltip>
                         </TableView>
                      </center>
                   </BorderPane>
@@ -376,7 +415,10 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TextArea fx:id="i_textArea" layoutX="63.0" layoutY="60.0" prefHeight="200.0" prefWidth="590.0" wrapText="true" />
+                        <TextArea fx:id="i_textArea" layoutX="63.0" layoutY="60.0" prefHeight="200.0" prefWidth="590.0" wrapText="true">
+                           <tooltip>
+                              <Tooltip text="[placeholder]Information about this model" />
+                           </tooltip></TextArea>
                         <Label layoutX="286.0" layoutY="24.0" text="Model Information">
                            <font>
                               <Font name="System Bold" size="14.0" />
