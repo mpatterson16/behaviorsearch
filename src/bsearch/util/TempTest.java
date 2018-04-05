@@ -41,6 +41,10 @@ public class TempTest {
 	}
 
 	public static void main(String[] args) throws CompilerException, CmdLineException, IOException, SAXException, BehaviorSearchException, SearchParameterException {
+
+		System.out.println(Integer.valueOf("012"));
+		System.exit(0);
+
 		String command= "-p test/TesterMOEA2.bsearch2 -o test/tmptmp/TesterMOEA2 -t 2 -n 1 --randomseed 1";
     	RunOptions clOptions = new RunOptions();
     	CmdLineParser parser = new CmdLineParser(clOptions); 

@@ -116,16 +116,16 @@
                            <children>
                               <TextField fx:id="m_modelStepField" layoutX="88.0" layoutY="89.0" prefHeight="25.0" prefWidth="194.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="89.0">
                                  <tooltip>
-                                    <Tooltip text="[placeholder]NetLogo command to be run each step, e.g. &quot;go&quot;" />
+                                    <Tooltip text="NetLogo command to be run each step, e.g. &quot;go&quot;" />
                                  </tooltip></TextField>
                               <Label layoutX="157.0" layoutY="128.0" text="model steps" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="128.0" />
                               <TextField fx:id="m_modelStepLimitField" layoutX="88.0" layoutY="123.0" prefHeight="25.0" prefWidth="60.0" AnchorPane.rightAnchor="157.0" AnchorPane.topAnchor="123.0">
                                  <tooltip>
-                                    <Tooltip text="[placeholder]Limit on the maximum number of steps that can run" />
+                                    <Tooltip text="Limit on the maximum number of steps that can run" />
                                  </tooltip></TextField>
                               <TextField fx:id="m_modelStopConditionField" layoutX="88.0" layoutY="159.0" prefHeight="25.0" prefWidth="194.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="159.0">
                                  <tooltip>
-                                    <Tooltip text="[placeholder]Condition on which the model should stop" />
+                                    <Tooltip text="Condition on which the model should stop" />
                                  </tooltip></TextField>
                               <TextField fx:id="m_measureIfField" layoutX="88.0" layoutY="191.0" prefHeight="25.0" prefWidth="194.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="191.0">
                                  <tooltip>
@@ -133,7 +133,7 @@
                                  </tooltip></TextField>
                               <TextField fx:id="m_modelSetupField" layoutX="88.0" layoutY="55.0" prefHeight="25.0" prefWidth="195.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="55.0">
                                  <tooltip>
-                                    <Tooltip text="[placeholder]NetLogo command to setup the model, e.g. &quot;setup&quot;" />
+                                    <Tooltip text="NetLogo command to setup the model, e.g. &quot;setup&quot;" />
                                  </tooltip></TextField>
                               <Label layoutX="6.0" layoutY="126.0" text="Step limit: " AnchorPane.rightAnchor="224.0" AnchorPane.topAnchor="126.0">
                                  <font>
@@ -274,7 +274,7 @@
                                     <Tooltip text="Instead of using the measure you've specified, use the *change* in that measure (with respect to a certain parameter) for your objective function." />
                                  </tooltip>
                               </CheckBox>
-                              <Label layoutX="30.0" layoutY="171.0" prefHeight="19.0" prefWidth="151.0" text="Objective function:" wrapText="true">
+                              <Label layoutX="25.0" layoutY="171.0" prefHeight="19.0" prefWidth="151.0" text="Objective function code:" wrapText="true">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -297,7 +297,7 @@
                                  <tooltip>
                                     <Tooltip text="[placeholder]" />
                                  </tooltip></TextField>
-                              <Label layoutX="10.0" layoutY="190.0" text=" (combines replicate runs)" />
+                              <Label layoutX="20.0" layoutY="190.0" text=" (combines replicate runs)" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -417,7 +417,7 @@
                      <children>
                         <TextArea fx:id="i_textArea" layoutX="63.0" layoutY="60.0" prefHeight="200.0" prefWidth="590.0" wrapText="true">
                            <tooltip>
-                              <Tooltip text="[placeholder]Information about this model" />
+                              <Tooltip text="Information about this model" />
                            </tooltip></TextArea>
                         <Label layoutX="286.0" layoutY="24.0" text="Model Information">
                            <font>

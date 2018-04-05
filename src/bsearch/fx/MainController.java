@@ -1,5 +1,6 @@
 package bsearch.fx;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -58,6 +59,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.web.WebView;
@@ -187,11 +189,11 @@ public class MainController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		//set up number fields
-		initializeNumberField(m_modelStepLimitField, false);
-		initializeNumberField(dc_fitnessSamplingRepetitionsField, false);
-		initializeNumberField(dc_bestCheckingField, false);
-		initializeNumberField(so_deltaField, true);
-		initializeNumberField(sa_evaluationLimitField, false);
+		FormValidationUtils.enforceNumericInput(m_modelStepLimitField, false);
+		FormValidationUtils.enforceNumericInput(dc_fitnessSamplingRepetitionsField, false);
+		FormValidationUtils.enforceNumericInput(dc_bestCheckingField, false);
+		FormValidationUtils.enforceNumericInput(so_deltaField, true);
+		FormValidationUtils.enforceNumericInput(sa_evaluationLimitField, false);
 		
 		// set up ChoiceBox in SO tab
 		List<String> goalChoices = Arrays.stream(OBJECTIVE_TYPE.values()).map(obj->obj.toString()).collect(Collectors.toList());
@@ -275,25 +277,7 @@ public class MainController implements Initializable {
 		//Platform.runLater( () -> openFile(new File("test/MiniFireVariance.bsearch")));
 	}	
 	
-	// based on code by Evan Knowles 
-	// https://stackoverflow.com/questions/7555564/what-is-the-recommended-way-to-make-a-numeric-textfield-in-javafx
-	public void initializeNumberField(TextField field, boolean allowDouble) {
-		field.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		    	if(allowDouble) {
-		    		if (!newValue.matches("[0-9.]*")) {
-		    			field.setText(newValue.replaceAll("[^0-9.]*", ""));
-		    		}
-		    	} else {
-		    		if (!newValue.matches("[0-9]*")) {
-			            field.setText(newValue.replaceAll("[^0-9]*", ""));
-			        }
-		    	}
-		    }
-		});
-	}
+	
 	
 	public void helpDialog(String title, String content){
 		Alert alert = new Alert(AlertType.INFORMATION);
