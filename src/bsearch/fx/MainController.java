@@ -224,7 +224,7 @@ public class MainController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldIndex, Number newIndex) {
 				if (((int) newIndex) != -1 && ((int) oldIndex != -1)) {
-//					GeneralUtils.debug("update UI fields: " + so_objectiveChoiceList.getItems().get(0));
+//					GeneralUtils.debug("update UI fields: " + .getItems().get(0));
 					updateUIFieldsForCurrentlySelectedObjective();
 				}
 			}
