@@ -359,43 +359,13 @@
                         </BorderPane>
                      </top>
                      <bottom>
-                        <AnchorPane prefHeight="86.0" prefWidth="698.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Label layoutX="597.0" layoutY="12.0" text="model runs" AnchorPane.bottomAnchor="58.0" AnchorPane.rightAnchor="27.0" />
-                              <Label layoutX="16.0" layoutY="31.0" text="Search Encoding Representation" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="16.0">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <ChoiceBox fx:id="sa_chromosomeTypeBox" layoutX="17.0" layoutY="48.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="17.0">
-                                 <tooltip>
-                                    <Tooltip text="[placeholder]" />
-                                 </tooltip></ChoiceBox>
-                              <Button fx:id="sa_helpSearchSpaceRepresentationButton" layoutX="219.0" layoutY="48.0" mnemonicParsing="false" onAction="#helpSearchSpaceRepresentationAction" text="?" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="219.0">
-                                 <tooltip>
-                                    <Tooltip text="Help about this Search Space Representation" />
-                                 </tooltip></Button>
-                              <TextField fx:id="sa_evaluationLimitField" layoutX="486.0" layoutY="5.0" prefHeight="26.0" prefWidth="97.0" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="115.0">
-                                 <tooltip>
-                                    <Tooltip text="Stop the search after this many model runs have occurred." />
-                                 </tooltip></TextField>
-                              <Label layoutX="372.0" layoutY="12.0" text="Evaluation limit: " AnchorPane.bottomAnchor="59.0" AnchorPane.rightAnchor="210.0">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <CheckBox fx:id="sa_cachingCheckBox" layoutX="15.0" layoutY="9.0" mnemonicParsing="false" text="Use fitness caching" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="15.0">
-                                 <tooltip>
-                                    <Tooltip text="If fitness caching is turned on then the result of running the model with certain parameters gets saved so the model won't be re-run if a run with those same parameters are requested again.  NOTE: If you are running out of RAM when doing long searches, turn this off!" />
-                                 </tooltip></CheckBox>
-                           </children>
-                        </AnchorPane>
+                        <AnchorPane prefHeight="86.0" prefWidth="698.0" BorderPane.alignment="CENTER" />
                      </bottom>
                      <center>
-                        <TableView fx:id="sa_searchMethodTable" prefHeight="113.0" prefWidth="698.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="sa_searchMethodTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="443.0" BorderPane.alignment="CENTER_LEFT">
                           <columns>
-                            <TableColumn fx:id="sa_paramCol" prefWidth="397.0" text="Parameter" />
-                            <TableColumn fx:id="sa_valCol" minWidth="0.0" prefWidth="268.0" text="Value" />
+                            <TableColumn fx:id="sa_paramCol" prefWidth="242.0" text="Parameter" />
+                            <TableColumn fx:id="sa_valCol" minWidth="0.0" prefWidth="155.0" text="Value" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -408,6 +378,40 @@
                            </tooltip>
                         </TableView>
                      </center>
+                     <right>
+                        <AnchorPane prefHeight="177.0" prefWidth="246.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <CheckBox fx:id="sa_cachingCheckBox" layoutX="39.0" layoutY="27.0" mnemonicParsing="false" text="Use fitness caching">
+                                 <tooltip>
+                                    <Tooltip text="If fitness caching is turned on then the result of running the model with certain parameters gets saved so the model won't be re-run if a run with those same parameters are requested again.  NOTE: If you are running out of RAM when doing long searches, turn this off!" />
+                                 </tooltip>
+                              </CheckBox>
+                              <Label layoutX="29.0" layoutY="78.0" text="Search Encoding Representation" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="29.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <ChoiceBox fx:id="sa_chromosomeTypeBox" layoutX="25.0" layoutY="104.0" prefHeight="26.0" prefWidth="190.0" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="25.0">
+                                 <tooltip>
+                                    <Tooltip text="[placeholder]" />
+                                 </tooltip></ChoiceBox>
+                              <Button fx:id="sa_helpSearchSpaceRepresentationButton" layoutX="191.0" layoutY="139.0" mnemonicParsing="false" onAction="#helpSearchSpaceRepresentationAction" text="?" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="191.0">
+                                 <tooltip>
+                                    <Tooltip text="Help about this Search Space Representation" />
+                                 </tooltip></Button>
+                              <Label layoutX="76.0" layoutY="190.0" text="Evaluation limit: " AnchorPane.bottomAnchor="53.0" AnchorPane.rightAnchor="75.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="sa_evaluationLimitField" layoutX="27.0" layoutY="214.0" prefHeight="26.0" prefWidth="97.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="122.0">
+                                 <tooltip>
+                                    <Tooltip text="Stop the search after this many model runs have occurred." />
+                                 </tooltip></TextField>
+                              <Label layoutX="131.0" layoutY="218.0" text="model runs" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="55.0" />
+                           </children>
+                        </AnchorPane>
+                     </right>
                   </BorderPane>
                </content>
             </Tab>
