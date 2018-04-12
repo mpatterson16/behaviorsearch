@@ -170,7 +170,7 @@ public class MainController implements Initializable {
 	// components in info tab start with i_
 	@FXML
 	private TextArea i_textArea;
-
+	
 
 	// other components that not in GUI
 	private File defaultUserDocumentsFolder = new FileChooser().getInitialDirectory();
@@ -462,12 +462,6 @@ public class MainController implements Initializable {
 		if (selectedFile != null) {
 			openFile(selectedFile);
 		}
-	}
-	
-	// TOOD: Remove this method, used for debugging only...
-	private void debugActionOpenTest() {
-		File selectedFile = new File("C:/Users/AnNguyen/Google Drive/behaviorsearch/behaviorsearch/examples/TestForFX.bsearch");
-		openFile(selectedFile);
 	}
 
 	private void openFile(File fProtocol) {
