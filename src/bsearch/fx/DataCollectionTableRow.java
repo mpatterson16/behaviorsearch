@@ -1,5 +1,5 @@
-package bsearch.test;
-
+package bsearch.fx;
+//TODO add comments
 public class DataCollectionTableRow {
 	private String variable;
 	private String code;

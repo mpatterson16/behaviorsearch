@@ -109,14 +109,32 @@ public class MainController implements Initializable {
 
 	// components in Data Collection tab will start with dc_
 	@FXML
-	private TextArea dc_rawMeasuresArea;
+	private TableView<DataCollectionTableRow> dc_rawTable;
+	//private TextArea dc_rawMeasuresArea;
 	@FXML
-	private TextArea dc_condensingMeasuresArea;
+	private TableColumn<DataCollectionTableRow, String> dc_rawVarCol;
+	//private TextArea dc_condensingMeasuresArea;
+	@FXML
+	private TableColumn<DataCollectionTableRow, String> dc_rawCodeCol;
+	@FXML
+	private Button dc_rawAddButton;
+	@FXML
+	private Button dc_rawRemoveButton;
+	@FXML
+	private TableView<DataCollectionTableRow> dc_condensedTable;
+	@FXML
+	private TableColumn<DataCollectionTableRow, String> dc_condensedVarCol;
+	@FXML
+	private TableColumn<DataCollectionTableRow, String> dc_condensedCodeCol;
+	@FXML
+	private Button dc_condensedAddButton;
+	@FXML
+	private Button dc_condensedRemoveButton;
 	@FXML
 	private TextField dc_fitnessSamplingRepetitionsField;
 	@FXML
 	private TextField dc_bestCheckingField;
-
+	
 	
 	// components in Search Objective tab will start with so_
 	@FXML
@@ -184,6 +202,10 @@ public class MainController implements Initializable {
 			new ExtensionFilter("BSsearch v2.x File (*.bsearch2,*.json)", "*.bsearch2", "*.json"),
 			new ExtensionFilter("BSsearch v1.x File (*.bsearch,*.xml)", "*.bsearch", "*.xml")
 	};
+	LinkedHashMap<String, String> dc_rawMap;
+	LinkedHashMap<String, String> dc_condensedMap;
+	private int dc_nextRawTableVariableNum;
+	private int dc_nextCondensedTableVariableNum;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -198,7 +220,7 @@ public class MainController implements Initializable {
 		// set up ChoiceBox in SO tab
 		List<String> goalChoices = Arrays.stream(OBJECTIVE_TYPE.values()).map(obj->obj.toString()).collect(Collectors.toList());
 		so_objectiveTypeBox.setItems(FXCollections.observableArrayList(goalChoices));
-		dc_condensingMeasuresArea.setText("CONDENSED1: last @{RAW1}");
+//		dc_condensingMeasuresArea.setText("CONDENSED1: last @{RAW1}");
 
 		so_combineReplicatesField.setText("mean @{CONDENSED1}");
 
@@ -275,6 +297,16 @@ public class MainController implements Initializable {
 		actionNew();
 
 		//Platform.runLater( () -> openFile(new File("test/MiniFireVariance.bsearch")));
+		
+		//Set up data collection tables
+		dc_nextRawTableVariableNum = 1;
+		dc_nextCondensedTableVariableNum = 1;
+		dc_rawMap = new LinkedHashMap<String, String>();
+		dc_condensedMap = new LinkedHashMap<String, String>();
+		configDataCollectionTable(dc_rawTable, dc_rawVarCol, dc_rawCodeCol, dc_rawMap);
+		configDataCollectionTable(dc_condensedTable, dc_condensedVarCol, dc_condensedCodeCol, dc_condensedMap);
+		handleRawAddButton();
+		handleCondensedAddButton();
 	}	
 	
 	
@@ -499,8 +531,8 @@ public class MainController implements Initializable {
 		m_modelStepLimitField.setText(Integer.toString(protocol.modelDCInfo.maxModelSteps));
 		m_measureIfField.setText(protocol.modelDCInfo.measureIfReporter);
 		
-		dc_rawMeasuresArea.setText(GeneralUtils.convertVariableMapToText(protocol.modelDCInfo.rawMeasureReporters));
-		dc_condensingMeasuresArea.setText(GeneralUtils.convertVariableMapToText(protocol.modelDCInfo.singleRunCondenserReporters));
+		dc_rawTable.setItems(GeneralUtils.convertVariableMapToList(protocol.modelDCInfo.rawMeasureReporters));
+		dc_condensedTable.setItems(GeneralUtils.convertVariableMapToList(protocol.modelDCInfo.singleRunCondenserReporters));
 		dc_fitnessSamplingRepetitionsField.setText(Integer.toString(protocol.modelDCInfo.fitnessSamplingReplications));
 		dc_bestCheckingField.setText(Integer.toString(protocol.modelDCInfo.bestCheckingNumReplications));
 		
@@ -534,7 +566,7 @@ public class MainController implements Initializable {
 					"Error: can't create search protocol");
 		}
 		
-		LinkedHashMap<String,String> rawVariableMap;
+/*		LinkedHashMap<String,String> rawVariableMap;
 		try {
 			rawVariableMap = GeneralUtils.convertTextToVariableMap(dc_rawMeasuresArea.getText());
 		} catch (BehaviorSearchException ex) {
@@ -547,7 +579,7 @@ public class MainController implements Initializable {
 		} catch (BehaviorSearchException ex) {
 			throw new UIConstraintException(ex.getMessage(), "Error parsing CONDENSING MEASURES:");
 		}
-
+*/
 		int fitnessSamplingRepetitions = 0;
 		try {
 			fitnessSamplingRepetitions = Integer.valueOf(dc_fitnessSamplingRepetitionsField.getText());
@@ -594,8 +626,10 @@ public class MainController implements Initializable {
 				Arrays.asList(m_paramSpecsArea.getText().split("\n")), 
 				m_modelSetupField.getText(), m_modelStepField.getText(), 
 				m_modelStopConditionField.getText(), modelStepLimit, m_measureIfField.getText(),
-				rawVariableMap,
-				condensedVariableMap,
+				//rawVariableMap,
+				//condensedVariableMap,
+				dc_rawMap,
+				dc_condensedMap,
 				fitnessSamplingRepetitions,
 				bestCheckingNumReplications,
 				so_objectiveChoiceList.getItems(),
@@ -989,6 +1023,60 @@ public class MainController implements Initializable {
 				//System.out.println(i); }
 			}
 		});
+	}
+	
+	@FXML
+	private void handleRawAddButton() {
+		DataCollectionTableRow newRow = new DataCollectionTableRow("RAW" + dc_nextRawTableVariableNum,
+				"mean [energy] of turtles");
+		dc_rawTable.getItems().add(newRow);
+		dc_rawMap.put(newRow.getVariable(), newRow.getCode());
+		dc_nextRawTableVariableNum++;
+	}
+	
+	@FXML
+	private void handleCondensedAddButton() {
+		DataCollectionTableRow newRow = new DataCollectionTableRow("CONDENSED" + dc_nextCondensedTableVariableNum,
+				"last @{RAW1}");
+		dc_condensedTable.getItems().add(newRow);
+		dc_condensedMap.put(newRow.getVariable(), newRow.getCode());
+		dc_nextCondensedTableVariableNum++;
+	}
+	
+	@FXML
+	private void handleRawRemoveButton() {
+		dc_rawTable.getItems().remove(dc_rawTable.getSelectionModel().getSelectedItem());
+		dc_rawMap.remove(dc_rawTable.getSelectionModel().getSelectedItem().getVariable());
+	}
+	
+	@FXML
+	private void handleCondensedRemoveButton() {
+		dc_condensedTable.getItems().remove(dc_condensedTable.getSelectionModel().getSelectedItem());
+		dc_condensedMap.remove(dc_condensedTable.getSelectionModel().getSelectedItem().getVariable());
+	}
+	
+	private void configDataCollectionTable(TableView<DataCollectionTableRow> table, 
+			TableColumn<DataCollectionTableRow, String> varCol, TableColumn<DataCollectionTableRow, String> codeCol, 
+			LinkedHashMap<String, String> map) {
+		varCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
+			@Override
+			public void handle(CellEditEvent<DataCollectionTableRow, String> e) {
+				String val = map.remove(e.getOldValue());
+				map.put(e.getNewValue(), val);
+				e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getNewValue());
+			}
+		});
+		codeCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
+			@Override
+			public void handle(CellEditEvent<DataCollectionTableRow, String> e) {
+				map.replace(e.getTableView().getItems().get(e.getTablePosition().getRow()).getVariable(), e.getOldValue(), e.getNewValue());
+				e.getTableView().getItems().get(e.getTablePosition().getRow()).setCode(e.getNewValue());
+			}
+		});
+		varCol.setCellFactory(AcceptOnExitTableCell.forTableColumn());
+		varCol.setCellValueFactory(new PropertyValueFactory<DataCollectionTableRow, String>("variable"));
+		codeCol.setCellFactory(AcceptOnExitTableCell.forTableColumn());
+		codeCol.setCellValueFactory(new PropertyValueFactory<DataCollectionTableRow, String>("code"));
 	}
 		
 	private class UIConstraintException extends Exception {

@@ -1,10 +1,14 @@
 package bsearch.util;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 import bsearch.app.BehaviorSearchException;
+import bsearch.fx.DataCollectionTableRow;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class GeneralUtils {
 	//NOTE: Before release, need to change the version number here, 
@@ -180,7 +184,7 @@ public class GeneralUtils {
 		System.out.println("DEBUG: " + string);
 		
 	}
-	public static LinkedHashMap<String, String> convertTextToVariableMap(String text) throws BehaviorSearchException {
+/*	public static LinkedHashMap<String, String> convertTextToVariableMap(String text) throws BehaviorSearchException {
 		LinkedHashMap<String,String> variableMap = new LinkedHashMap<>();
 		String[] lines = text.split("\n");
 		for (String line: lines) {
@@ -196,7 +200,7 @@ public class GeneralUtils {
 			variableMap.put(key,value);
 		}
 		return variableMap;		
-	}
+	}*/
 
 	public static String convertVariableMapToText(LinkedHashMap<String, String> variableMap) {
 		StringBuilder sb = new StringBuilder();
@@ -204,6 +208,14 @@ public class GeneralUtils {
 			sb.append(key).append(": ").append(variableMap.get(key)).append("\n");
 		}
 		return sb.toString();		
+	}
+	
+	public static ObservableList<DataCollectionTableRow> convertVariableMapToList(LinkedHashMap<String, String> variableMap) {
+		ObservableList<DataCollectionTableRow> dataCollectionList = FXCollections.observableArrayList(new ArrayList<DataCollectionTableRow>());
+		for(String key: variableMap.keySet()) {
+			dataCollectionList.add(new DataCollectionTableRow(key, variableMap.get(key)));
+		}
+		return dataCollectionList;
 	}
 
 
