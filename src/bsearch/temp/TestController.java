@@ -1,4 +1,4 @@
-package bsearch.test;
+package bsearch.temp;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 
 import bsearch.fx.AcceptOnExitTableCell;
+import bsearch.fx.DataCollectionTableRow;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 
 public class TestController implements Initializable {
@@ -28,17 +30,16 @@ public class TestController implements Initializable {
 	@FXML
 	private Button dc_removeMeasureButton;
 	
-	private ArrayList<DataCollectionTableRow> list;
+//	private ObservableList<DataCollectionTableRow> list;
 	LinkedHashMap<String, String> map;
-	private int num;
-	private int ind;
+	private int nextTableVariableNum;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		list = new ArrayList<DataCollectionTableRow>();
-		num = 0;
-		ind = 0;
+		//list = FXCollections.observableArrayList(new ArrayList<DataCollectionTableRow>());
+		nextTableVariableNum = 0;
 		map = new LinkedHashMap<String, String>();
+		//TODO configDataCollectionTable(tab,varCol,codeCol)
 		dc_varCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
 			@Override
 			public void handle(CellEditEvent<DataCollectionTableRow, String> e) {
@@ -54,20 +55,21 @@ public class TestController implements Initializable {
 				e.getTableView().getItems().get(e.getTablePosition().getRow()).setCode(e.getNewValue());
 			}
 		});
-		
-	}
-	
-	public void handleAddMeasureButton() {
-		table.setEditable(true);
-		list.add(new DataCollectionTableRow("RAW" + num, "mean [energy] of turtles"));
+//		table.setEditable(true);
 		dc_varCol.setCellFactory(AcceptOnExitTableCell.forTableColumn());
 		dc_varCol.setCellValueFactory(new PropertyValueFactory<DataCollectionTableRow, String>("variable"));
 		dc_codeCol.setCellFactory(AcceptOnExitTableCell.forTableColumn());
 		dc_codeCol.setCellValueFactory(new PropertyValueFactory<DataCollectionTableRow, String>("code"));
-		table.setItems(FXCollections.observableArrayList(list));
-		map.put(list.get(ind).getVariable(), list.get(ind).getCode());
-		num++;
-		ind++;
+	}
+	
+	public void handleAddMeasureButton() {
+		
+		DataCollectionTableRow newRow = new DataCollectionTableRow("RAW" + nextTableVariableNum, "mean [energy] of turtles");
+		table.getItems().add(newRow);
+		map.put(newRow.getVariable(), newRow.getCode());
+		
+		//table.setItems(list);
+		nextTableVariableNum++;
 		/*for(int j = 0; j < map.size(); j++) {
 			String key = list.get(j).getVariable();
 			System.out.println(key + " " + map.get(key));
@@ -75,9 +77,7 @@ public class TestController implements Initializable {
 	}
 	
 	public void handleRemoveMeasureButton() {
-		list.remove(table.getSelectionModel().getSelectedItem());
+		table.getItems().remove(table.getSelectionModel().getSelectedItem());
 		map.remove(table.getSelectionModel().getSelectedItem().getVariable());
-		table.setItems(FXCollections.observableArrayList(list));
-		ind--;
 	}
 }

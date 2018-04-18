@@ -1,4 +1,4 @@
-package bsearch.test;
+package bsearch.temp;
 
 import bsearch.util.GeneralUtils;
 import javafx.application.Application;
