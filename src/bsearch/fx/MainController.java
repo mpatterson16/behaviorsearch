@@ -299,14 +299,12 @@ public class MainController implements Initializable {
 		//Platform.runLater( () -> openFile(new File("test/MiniFireVariance.bsearch")));
 		
 		//Set up data collection tables
-		dc_nextRawTableVariableNum = 1;
-		dc_nextCondensedTableVariableNum = 1;
+		dc_nextRawTableVariableNum = 2;
+		dc_nextCondensedTableVariableNum = 2;
 		dc_rawMap = new LinkedHashMap<String, String>();
 		dc_condensedMap = new LinkedHashMap<String, String>();
 		configDataCollectionTable(dc_rawTable, dc_rawVarCol, dc_rawCodeCol, dc_rawMap);
 		configDataCollectionTable(dc_condensedTable, dc_condensedVarCol, dc_condensedCodeCol, dc_condensedMap);
-		handleRawAddButton();
-		handleCondensedAddButton();
 	}	
 	
 	
@@ -1061,9 +1059,20 @@ public class MainController implements Initializable {
 		varCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
 			@Override
 			public void handle(CellEditEvent<DataCollectionTableRow, String> e) {
-				String val = map.remove(e.getOldValue());
-				map.put(e.getNewValue(), val);
-				e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getNewValue());
+				if(!map.containsKey(e.getNewValue()) && !e.getNewValue().equals("")) {
+					String val = map.remove(e.getOldValue());
+					map.put(e.getNewValue(), val);
+					e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getNewValue());
+				} else {
+					e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getOldValue());
+					table.refresh();
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error");
+					alert.setHeaderText("Improper Variable");
+					alert.setContentText("You cannot have two variables with the same name or a variable without a name.");
+					alert.showAndWait();
+					
+				}
 			}
 		});
 		codeCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
