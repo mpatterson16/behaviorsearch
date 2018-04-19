@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.swing.SwingUtilities;
@@ -110,10 +111,8 @@ public class MainController implements Initializable {
 	// components in Data Collection tab will start with dc_
 	@FXML
 	private TableView<DataCollectionTableRow> dc_rawTable;
-	//private TextArea dc_rawMeasuresArea;
 	@FXML
 	private TableColumn<DataCollectionTableRow, String> dc_rawVarCol;
-	//private TextArea dc_condensingMeasuresArea;
 	@FXML
 	private TableColumn<DataCollectionTableRow, String> dc_rawCodeCol;
 	@FXML
@@ -202,8 +201,8 @@ public class MainController implements Initializable {
 			new ExtensionFilter("BSsearch v2.x File (*.bsearch2,*.json)", "*.bsearch2", "*.json"),
 			new ExtensionFilter("BSsearch v1.x File (*.bsearch,*.xml)", "*.bsearch", "*.xml")
 	};
-	LinkedHashMap<String, String> dc_rawMap;
-	LinkedHashMap<String, String> dc_condensedMap;
+	private final LinkedHashMap<String, String> dc_rawMap = new LinkedHashMap<String, String>();
+	private final LinkedHashMap<String, String> dc_condensedMap = new LinkedHashMap<String, String>();
 	private int dc_nextRawTableVariableNum;
 	private int dc_nextCondensedTableVariableNum;
 
@@ -294,17 +293,16 @@ public class MainController implements Initializable {
 			handleError("Error: file missing!","Cannot find defaultNewSearch.bsearch2", null);
 			System.exit(1);
 		}
-		actionNew();
 
 		//Platform.runLater( () -> openFile(new File("test/MiniFireVariance.bsearch")));
 		
 		//Set up data collection tables
 		dc_nextRawTableVariableNum = 2;
 		dc_nextCondensedTableVariableNum = 2;
-		dc_rawMap = new LinkedHashMap<String, String>();
-		dc_condensedMap = new LinkedHashMap<String, String>();
 		configDataCollectionTable(dc_rawTable, dc_rawVarCol, dc_rawCodeCol, dc_rawMap);
 		configDataCollectionTable(dc_condensedTable, dc_condensedVarCol, dc_condensedCodeCol, dc_condensedMap);
+
+		actionNew();
 	}	
 	
 	
@@ -448,8 +446,7 @@ public class MainController implements Initializable {
 		"[\"continuousParameter\" [0.0 \"C\" 1.0]] \n " +
 		"[\"choiceParameter\" \"near\" \"far\"] \n");
 		 
-		SearchProtocolInfo protocol;
-		protocol = SearchProtocolInfo.loadFromJSONString(defaultProtocolJSONForNewSearch);
+		SearchProtocolInfo protocol = SearchProtocolInfo.loadFromJSONString(defaultProtocolJSONForNewSearch);
 		loadProtocol(protocol);
 		updateWindowTitle("Untitled");
 	}
@@ -531,6 +528,11 @@ public class MainController implements Initializable {
 		
 		dc_rawTable.setItems(GeneralUtils.convertVariableMapToList(protocol.modelDCInfo.rawMeasureReporters));
 		dc_condensedTable.setItems(GeneralUtils.convertVariableMapToList(protocol.modelDCInfo.singleRunCondenserReporters));
+		dc_rawMap.clear();
+		dc_rawMap.putAll(protocol.modelDCInfo.rawMeasureReporters);
+		dc_condensedMap.clear();
+		dc_condensedMap.putAll(protocol.modelDCInfo.singleRunCondenserReporters);
+		
 		dc_fitnessSamplingRepetitionsField.setText(Integer.toString(protocol.modelDCInfo.fitnessSamplingReplications));
 		dc_bestCheckingField.setText(Integer.toString(protocol.modelDCInfo.bestCheckingNumReplications));
 		
@@ -1059,10 +1061,15 @@ public class MainController implements Initializable {
 		varCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
 			@Override
 			public void handle(CellEditEvent<DataCollectionTableRow, String> e) {
-				if(!map.containsKey(e.getNewValue()) && !e.getNewValue().equals("")) {
-					String val = map.remove(e.getOldValue());
-					map.put(e.getNewValue(), val);
-					e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getNewValue());
+				
+				Set<String> existingKeys = table.getItems().stream().map(row -> row.getVariable()).collect(Collectors.toSet());
+				System.out.println(existingKeys);
+				
+				if(!map.containsKey(e.getNewValue()) && !e.getNewValue().trim().equals("")) {
+					String codeVal = map.remove(e.getOldValue());
+					map.put(e.getNewValue(), codeVal);
+					e.getRowValue().setVariable(e.getNewValue());
+					//e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getNewValue());
 				} else {
 					e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getOldValue());
 					table.refresh();
