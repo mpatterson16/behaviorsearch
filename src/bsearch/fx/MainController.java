@@ -201,8 +201,6 @@ public class MainController implements Initializable {
 			new ExtensionFilter("BSsearch v2.x File (*.bsearch2,*.json)", "*.bsearch2", "*.json"),
 			new ExtensionFilter("BSsearch v1.x File (*.bsearch,*.xml)", "*.bsearch", "*.xml")
 	};
-	private int dc_nextRawTableVariableNum;
-	private int dc_nextCondensedTableVariableNum;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -295,8 +293,6 @@ public class MainController implements Initializable {
 		//Platform.runLater( () -> openFile(new File("test/MiniFireVariance.bsearch")));
 		
 		//Set up data collection tables
-		dc_nextRawTableVariableNum = 2;
-		dc_nextCondensedTableVariableNum = 2;
 		configDataCollectionTable(dc_rawTable, dc_rawVarCol, dc_rawCodeCol);
 		configDataCollectionTable(dc_condensedTable, dc_condensedVarCol, dc_condensedCodeCol);
 
@@ -1022,18 +1018,46 @@ public class MainController implements Initializable {
 	
 	@FXML
 	private void handleRawAddButton() {
-		DataCollectionTableRow newRow = new DataCollectionTableRow("RAW" + dc_nextRawTableVariableNum,
+		boolean needNum = true;
+		int i = 1;
+		while(needNum) {
+			boolean isUnique = true;
+			for(int j = 0; j < dc_rawTable.getItems().size(); j++) {
+				if(dc_rawTable.getItems().get(j).getVariable().equals("RAW" + i)) {
+					isUnique = false;
+				}
+			}
+			if(isUnique) {
+				needNum = false;
+			} else {
+				i++;
+			}
+		}
+		DataCollectionTableRow newRow = new DataCollectionTableRow("RAW" + i,
 				"mean [energy] of turtles");
 		dc_rawTable.getItems().add(newRow);
-		dc_nextRawTableVariableNum++;
 	}
 	
 	@FXML
 	private void handleCondensedAddButton() {
-		DataCollectionTableRow newRow = new DataCollectionTableRow("CONDENSED" + dc_nextCondensedTableVariableNum,
+		boolean needNum = true;
+		int i = 1;
+		while(needNum) {
+			boolean isUnique = true;
+			for(int j = 0; j < dc_condensedTable.getItems().size(); j++) {
+				if(dc_condensedTable.getItems().get(j).getVariable().equals("CONDENSED" + i)) {
+					isUnique = false;
+				}
+			}
+			if(isUnique) {
+				needNum = false;
+			} else {
+				i++;
+			}
+		}
+		DataCollectionTableRow newRow = new DataCollectionTableRow("CONDENSED" + i,
 				"last @{RAW1}");
 		dc_condensedTable.getItems().add(newRow);
-		dc_nextCondensedTableVariableNum++;
 	}
 	
 	@FXML
@@ -1066,8 +1090,8 @@ public class MainController implements Initializable {
 					alert.showAndWait();
 					
 				}
-				existingKeys = table.getItems().stream().map(row -> row.getVariable()).collect(Collectors.toSet());
-				System.out.println(existingKeys); //TODO why does clicking off set off error message?
+				//existingKeys = table.getItems().stream().map(row -> row.getVariable()).collect(Collectors.toSet());
+				//System.out.println(existingKeys); //TODO why does clicking off set off error message?
 			}
 		});
 		codeCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
