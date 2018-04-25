@@ -1078,7 +1078,7 @@ public class MainController implements Initializable {
 				
 				Set<String> existingKeys = table.getItems().stream().map(row -> row.getVariable()).collect(Collectors.toSet());
 				
-				if(!existingKeys.contains(e.getNewValue()) && !e.getNewValue().trim().equals("")) {
+				if(!existingKeys.contains(e.getNewValue()) && !e.getNewValue().trim().equals("") || e.getNewValue().equals(e.getOldValue())) {
 					e.getRowValue().setVariable(e.getNewValue());
 				} else {
 					e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getOldValue());
@@ -1091,7 +1091,7 @@ public class MainController implements Initializable {
 					
 				}
 				//existingKeys = table.getItems().stream().map(row -> row.getVariable()).collect(Collectors.toSet());
-				//System.out.println(existingKeys); //TODO why does clicking off set off error message?
+				//System.out.println(existingKeys);
 			}
 		});
 		codeCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
