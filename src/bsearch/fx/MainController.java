@@ -201,8 +201,6 @@ public class MainController implements Initializable {
 			new ExtensionFilter("BSsearch v2.x File (*.bsearch2,*.json)", "*.bsearch2", "*.json"),
 			new ExtensionFilter("BSsearch v1.x File (*.bsearch,*.xml)", "*.bsearch", "*.xml")
 	};
-	private final LinkedHashMap<String, String> dc_rawMap = new LinkedHashMap<String, String>();
-	private final LinkedHashMap<String, String> dc_condensedMap = new LinkedHashMap<String, String>();
 	private int dc_nextRawTableVariableNum;
 	private int dc_nextCondensedTableVariableNum;
 
@@ -299,8 +297,8 @@ public class MainController implements Initializable {
 		//Set up data collection tables
 		dc_nextRawTableVariableNum = 2;
 		dc_nextCondensedTableVariableNum = 2;
-		configDataCollectionTable(dc_rawTable, dc_rawVarCol, dc_rawCodeCol, dc_rawMap);
-		configDataCollectionTable(dc_condensedTable, dc_condensedVarCol, dc_condensedCodeCol, dc_condensedMap);
+		configDataCollectionTable(dc_rawTable, dc_rawVarCol, dc_rawCodeCol);
+		configDataCollectionTable(dc_condensedTable, dc_condensedVarCol, dc_condensedCodeCol);
 
 		actionNew();
 	}	
@@ -528,10 +526,6 @@ public class MainController implements Initializable {
 		
 		dc_rawTable.setItems(GeneralUtils.convertVariableMapToList(protocol.modelDCInfo.rawMeasureReporters));
 		dc_condensedTable.setItems(GeneralUtils.convertVariableMapToList(protocol.modelDCInfo.singleRunCondenserReporters));
-		dc_rawMap.clear();
-		dc_rawMap.putAll(protocol.modelDCInfo.rawMeasureReporters);
-		dc_condensedMap.clear();
-		dc_condensedMap.putAll(protocol.modelDCInfo.singleRunCondenserReporters);
 		
 		dc_fitnessSamplingRepetitionsField.setText(Integer.toString(protocol.modelDCInfo.fitnessSamplingReplications));
 		dc_bestCheckingField.setText(Integer.toString(protocol.modelDCInfo.bestCheckingNumReplications));
@@ -621,15 +615,16 @@ public class MainController implements Initializable {
 			throw new UIConstraintException("EVALUATION LIMIT should be a positive integer.",
 					"Error: can't create search protocol");
 		}
-
+		
+		LinkedHashMap<String, String> rawVariableMap = GeneralUtils.convertTableItemsToMap(dc_rawTable.getItems());
+		LinkedHashMap<String, String> condensedVariableMap = GeneralUtils.convertTableItemsToMap(dc_condensedTable.getItems());
+		
 		SearchProtocolInfo protocol = new SearchProtocolInfo(browseModelField.getText(),
 				Arrays.asList(m_paramSpecsArea.getText().split("\n")), 
 				m_modelSetupField.getText(), m_modelStepField.getText(), 
 				m_modelStopConditionField.getText(), modelStepLimit, m_measureIfField.getText(),
-				//rawVariableMap,
-				//condensedVariableMap,
-				dc_rawMap,
-				dc_condensedMap,
+				rawVariableMap,
+				condensedVariableMap,
 				fitnessSamplingRepetitions,
 				bestCheckingNumReplications,
 				so_objectiveChoiceList.getItems(),
@@ -1030,7 +1025,6 @@ public class MainController implements Initializable {
 		DataCollectionTableRow newRow = new DataCollectionTableRow("RAW" + dc_nextRawTableVariableNum,
 				"mean [energy] of turtles");
 		dc_rawTable.getItems().add(newRow);
-		dc_rawMap.put(newRow.getVariable(), newRow.getCode());
 		dc_nextRawTableVariableNum++;
 	}
 	
@@ -1039,37 +1033,29 @@ public class MainController implements Initializable {
 		DataCollectionTableRow newRow = new DataCollectionTableRow("CONDENSED" + dc_nextCondensedTableVariableNum,
 				"last @{RAW1}");
 		dc_condensedTable.getItems().add(newRow);
-		dc_condensedMap.put(newRow.getVariable(), newRow.getCode());
 		dc_nextCondensedTableVariableNum++;
 	}
 	
 	@FXML
 	private void handleRawRemoveButton() {
 		dc_rawTable.getItems().remove(dc_rawTable.getSelectionModel().getSelectedItem());
-		dc_rawMap.remove(dc_rawTable.getSelectionModel().getSelectedItem().getVariable());
 	}
 	
 	@FXML
 	private void handleCondensedRemoveButton() {
 		dc_condensedTable.getItems().remove(dc_condensedTable.getSelectionModel().getSelectedItem());
-		dc_condensedMap.remove(dc_condensedTable.getSelectionModel().getSelectedItem().getVariable());
 	}
 	
 	private void configDataCollectionTable(TableView<DataCollectionTableRow> table, 
-			TableColumn<DataCollectionTableRow, String> varCol, TableColumn<DataCollectionTableRow, String> codeCol, 
-			LinkedHashMap<String, String> map) {
+			TableColumn<DataCollectionTableRow, String> varCol, TableColumn<DataCollectionTableRow, String> codeCol) {
 		varCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
 			@Override
 			public void handle(CellEditEvent<DataCollectionTableRow, String> e) {
 				
 				Set<String> existingKeys = table.getItems().stream().map(row -> row.getVariable()).collect(Collectors.toSet());
-				System.out.println(existingKeys);
 				
-				if(!map.containsKey(e.getNewValue()) && !e.getNewValue().trim().equals("")) {
-					String codeVal = map.remove(e.getOldValue());
-					map.put(e.getNewValue(), codeVal);
+				if(!existingKeys.contains(e.getNewValue()) && !e.getNewValue().trim().equals("")) {
 					e.getRowValue().setVariable(e.getNewValue());
-					//e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getNewValue());
 				} else {
 					e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getOldValue());
 					table.refresh();
@@ -1080,12 +1066,13 @@ public class MainController implements Initializable {
 					alert.showAndWait();
 					
 				}
+				existingKeys = table.getItems().stream().map(row -> row.getVariable()).collect(Collectors.toSet());
+				System.out.println(existingKeys); //TODO why does clicking off set off error message?
 			}
 		});
 		codeCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
 			@Override
 			public void handle(CellEditEvent<DataCollectionTableRow, String> e) {
-				map.replace(e.getTableView().getItems().get(e.getTablePosition().getRow()).getVariable(), e.getOldValue(), e.getNewValue());
 				e.getTableView().getItems().get(e.getTablePosition().getRow()).setCode(e.getNewValue());
 			}
 		});

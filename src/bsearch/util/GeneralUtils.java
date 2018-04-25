@@ -210,6 +210,14 @@ public class GeneralUtils {
 		return sb.toString();		
 	}
 	
+	public static LinkedHashMap<String, String> convertTableItemsToMap(ObservableList<DataCollectionTableRow> list) {
+		LinkedHashMap<String, String> varMap = new LinkedHashMap<String, String>();
+		for(DataCollectionTableRow row: list) {
+			varMap.put(row.getVariable(), row.getCode());
+		}
+		return varMap;
+	}
+	
 	public static ObservableList<DataCollectionTableRow> convertVariableMapToList(LinkedHashMap<String, String> variableMap) {
 		ObservableList<DataCollectionTableRow> dataCollectionList = FXCollections.observableArrayList(new ArrayList<DataCollectionTableRow>());
 		for(String key: variableMap.keySet()) {
