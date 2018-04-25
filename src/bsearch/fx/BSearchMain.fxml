@@ -216,19 +216,19 @@
                               <Font size="12.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="dc_condensedTable" editable="true" layoutX="353.0" layoutY="29.0" prefHeight="195.0" prefWidth="346.0">
+                        <TableView fx:id="dc_condensedTable" editable="true" layoutX="353.0" layoutY="29.0" prefHeight="195.0" prefWidth="345.0">
                           <columns>
                             <TableColumn fx:id="dc_condensedVarCol" prefWidth="100.0" text="Variable" />
-                            <TableColumn fx:id="dc_condensedCodeCol" prefWidth="244.0" text="Code" />
+                            <TableColumn fx:id="dc_condensedCodeCol" prefWidth="243.0" text="Code" />
                           </columns>
                            <tooltip>
                               <Tooltip text="double-click to edit table" />
                            </tooltip>
                         </TableView>
-                        <TableView fx:id="dc_rawTable" editable="true" layoutY="29.0" prefHeight="195.0" prefWidth="346.0">
+                        <TableView fx:id="dc_rawTable" editable="true" layoutY="29.0" prefHeight="195.0" prefWidth="345.0">
                           <columns>
                             <TableColumn fx:id="dc_rawVarCol" prefWidth="100.0" text="Variable" />
-                            <TableColumn fx:id="dc_rawCodeCol" prefWidth="244.0" text="Code" />
+                            <TableColumn fx:id="dc_rawCodeCol" prefWidth="243.0" text="Code" />
                           </columns>
                            <tooltip>
                               <Tooltip text="double-click to edit table" />
