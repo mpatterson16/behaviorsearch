@@ -22,7 +22,7 @@ public class FormValidationUtils {
 					}
 				}
 				try {
-					Double.valueOf(newValue);
+					Double.valueOf(field.getText());
 					field.setStyle("");
 				} catch (NumberFormatException ex) {
 					field.setStyle("-fx-control-inner-background:pink;");

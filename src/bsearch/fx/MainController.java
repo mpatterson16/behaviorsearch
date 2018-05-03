@@ -729,7 +729,7 @@ public class MainController implements Initializable {
 		@Override
 		public void changed(ObservableValue<? extends T> observable, T oldValue, T newValue) {
 			try {
-				GeneralUtils.debug(observable + " : " + oldValue + " -> " + newValue);
+//				GeneralUtils.debug(observable + " : " + oldValue + " -> " + newValue);
 				updateCurrentlySelectedObjectiveFromFields();
 			} catch (UIConstraintException e) {
 				handleError(e.getTitle(),e.getMessage());

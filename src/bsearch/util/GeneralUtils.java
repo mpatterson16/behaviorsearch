@@ -184,23 +184,6 @@ public class GeneralUtils {
 		System.out.println("DEBUG: " + string);
 		
 	}
-/*	public static LinkedHashMap<String, String> convertTextToVariableMap(String text) throws BehaviorSearchException {
-		LinkedHashMap<String,String> variableMap = new LinkedHashMap<>();
-		String[] lines = text.split("\n");
-		for (String line: lines) {
-			int colonIndex = line.indexOf(':');
-			if (colonIndex < 0) {
-				throw new BehaviorSearchException("Each line must have format 'VARIABLE: REPORTER'.\n Problem line: " + line );
-			}
-			String key = line.substring(0,colonIndex).trim();
-			String value = line.substring(colonIndex+1).trim();
-			if (variableMap.containsKey(key)) {
-				throw new BehaviorSearchException("Each variable name must be unique!\n Variable: '" + key + "' is defined multiple times.");
-			}
-			variableMap.put(key,value);
-		}
-		return variableMap;		
-	}*/
 
 	public static String convertVariableMapToText(LinkedHashMap<String, String> variableMap) {
 		StringBuilder sb = new StringBuilder();
