@@ -293,8 +293,8 @@ public class MainController implements Initializable {
 		//Platform.runLater( () -> openFile(new File("test/MiniFireVariance.bsearch")));
 		
 		//Set up data collection tables
-		configDataCollectionTable(dc_rawTable, dc_rawVarCol, dc_rawCodeCol);
-		configDataCollectionTable(dc_condensedTable, dc_condensedVarCol, dc_condensedCodeCol);
+		DataCollectionTableUtils.configTableEditing(dc_rawTable, dc_rawVarCol, dc_rawCodeCol);
+		DataCollectionTableUtils.configTableEditing(dc_condensedTable, dc_condensedVarCol, dc_condensedCodeCol);
 
 		actionNew();
 	}	
@@ -1069,43 +1069,7 @@ public class MainController implements Initializable {
 	private void handleCondensedRemoveButton() {
 		dc_condensedTable.getItems().remove(dc_condensedTable.getSelectionModel().getSelectedItem());
 	}
-	
-	private void configDataCollectionTable(TableView<DataCollectionTableRow> table, 
-			TableColumn<DataCollectionTableRow, String> varCol, TableColumn<DataCollectionTableRow, String> codeCol) {
-		varCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
-			@Override
-			public void handle(CellEditEvent<DataCollectionTableRow, String> e) {
-				
-				Set<String> existingKeys = table.getItems().stream().map(row -> row.getVariable()).collect(Collectors.toSet());
-				
-				if(!existingKeys.contains(e.getNewValue()) && !e.getNewValue().trim().equals("") || e.getNewValue().equals(e.getOldValue())) {
-					e.getRowValue().setVariable(e.getNewValue());
-				} else {
-					e.getTableView().getItems().get(e.getTablePosition().getRow()).setVariable(e.getOldValue());
-					table.refresh();
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Error");
-					alert.setHeaderText("Improper Variable");
-					alert.setContentText("You cannot have two variables with the same name or a variable without a name.");
-					alert.showAndWait();
-					
-				}
-				//existingKeys = table.getItems().stream().map(row -> row.getVariable()).collect(Collectors.toSet());
-				//System.out.println(existingKeys);
-			}
-		});
-		codeCol.setOnEditCommit(new EventHandler<CellEditEvent<DataCollectionTableRow, String>>() {
-			@Override
-			public void handle(CellEditEvent<DataCollectionTableRow, String> e) {
-				e.getTableView().getItems().get(e.getTablePosition().getRow()).setCode(e.getNewValue());
-			}
-		});
-		varCol.setCellFactory(AcceptOnExitTableCell.forTableColumn());
-		varCol.setCellValueFactory(new PropertyValueFactory<DataCollectionTableRow, String>("variable"));
-		codeCol.setCellFactory(AcceptOnExitTableCell.forTableColumn());
-		codeCol.setCellValueFactory(new PropertyValueFactory<DataCollectionTableRow, String>("code"));
-	}
-		
+			
 	private class UIConstraintException extends Exception {
 		private String title;
 

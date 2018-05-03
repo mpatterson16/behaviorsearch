@@ -1,0 +1,51 @@
+{
+  "bsearchVersionNumber": 2.0,
+  "infoTab": "Write notes here...",
+  "modelDCInfo": {
+    "modelFileName": "C:\\Program Files\\NetLogo 6.0.2\\app\\models\\Sample Models\\Earth Science\\Fire.nlogo",
+    "setupCommands": "setup",
+    "stepCommands": "go",
+    "stopCondition": "not any? turtles",
+    "measureIfReporter": "@DONE",
+    "maxModelSteps": 10000,
+    "rawMeasureReporters": {
+      "RAW1": "(burned-trees / initial-trees) * 100"
+    },
+    "singleRunCondenserReporters": {
+      "CONDENSED1": "last @{RAW1}"
+    },
+    "fitnessSamplingReplications": 2,
+    "bestCheckingNumReplications": 4
+  },
+  "paramSpecStrings": [
+    "[\"density\" [2 \"C\" 99]]"
+  ],
+  "objectives": [
+    {
+      "name": "objective1",
+      "objectiveType": "MAXIMIZE",
+      "fitnessCombineReplications": "mean @{CONDENSED1}",
+      "fitnessDerivativeParameter": "density",
+      "fitnessDerivativeDelta": 1.0,
+      "fitnessDerivativeUseAbs": false
+    },
+    {
+      "name": "objective2",
+      "objectiveType": "MAXIMIZE",
+      "fitnessCombineReplications": "mean @{CONDENSED1}",
+      "fitnessDerivativeParameter": "",
+      "fitnessDerivativeDelta": 0.0,
+      "fitnessDerivativeUseAbs": true
+    }
+  ],
+  "searchAlgorithmInfo": {
+    "searchMethodType": "MutationHillClimber",
+    "searchMethodParams": {
+      "mutation-rate": "1.0",
+      "restart-after-stall-count": "0"
+    },
+    "chromosomeType": "MixedTypeChromosome",
+    "caching": false,
+    "evaluationLimit": 600
+  }
+}
