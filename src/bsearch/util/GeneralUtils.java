@@ -3,7 +3,9 @@ package bsearch.util;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import bsearch.app.BehaviorSearchException;
 import bsearch.fx.DataCollectionTableRow;
@@ -184,14 +186,6 @@ public class GeneralUtils {
 		System.out.println("DEBUG: " + string);
 		
 	}
-
-	public static String convertVariableMapToText(LinkedHashMap<String, String> variableMap) {
-		StringBuilder sb = new StringBuilder();
-		for (String key: variableMap.keySet()) {
-			sb.append(key).append(": ").append(variableMap.get(key)).append("\n");
-		}
-		return sb.toString();		
-	}
 	
 	public static LinkedHashMap<String, String> convertTableItemsToMap(ObservableList<DataCollectionTableRow> list) {
 		LinkedHashMap<String, String> varMap = new LinkedHashMap<String, String>();
@@ -207,6 +201,15 @@ public class GeneralUtils {
 			dataCollectionList.add(new DataCollectionTableRow(key, variableMap.get(key)));
 		}
 		return dataCollectionList;
+	}
+	
+	public static List<String> findInvalidVariableNames(String code, Set<String> validVariables) {
+		
+		// find things that look like @{...} inside code, and check if ... is in the list of validVariables
+		// collect a list of all the invalid variables to return.
+		// if you want to use regex, 
+		//code.
+		return null;
 	}
 
 

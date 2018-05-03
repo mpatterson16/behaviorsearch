@@ -616,6 +616,12 @@ public class MainController implements Initializable {
 		
 		LinkedHashMap<String, String> rawVariableMap = GeneralUtils.convertTableItemsToMap(dc_rawTable.getItems());
 		LinkedHashMap<String, String> condensedVariableMap = GeneralUtils.convertTableItemsToMap(dc_condensedTable.getItems());
+		List<ObjectiveFunctionInfo> objectiveInfos = so_objectiveChoiceList.getItems();
+		
+		//TODO: validate that condensed codes refer to raw variable names
+		//      and EVERY objInfo.fitnessCombineReplications refers to condensed variable names
+		//      Throw new UIConstraintException whenever there's a problem
+		rawVariableMap.k
 		
 		SearchProtocolInfo protocol = new SearchProtocolInfo(browseModelField.getText(),
 				Arrays.asList(m_paramSpecsArea.getText().split("\n")), 
@@ -625,7 +631,7 @@ public class MainController implements Initializable {
 				condensedVariableMap,
 				fitnessSamplingRepetitions,
 				bestCheckingNumReplications,
-				so_objectiveChoiceList.getItems(),
+				objectiveInfos,
 				sa_searchMethodBox.getValue().toString(),
 				searchMethodParams, 
 				sa_chromosomeTypeBox.getValue().toString(),
@@ -696,7 +702,7 @@ public class MainController implements Initializable {
 		}
 		try {
 			
-			jsonStr = createProtocolFromFormData().toJSONString();
+			jsonStr = rotocolFromFormData().toJSONString();
 		} catch (UIConstraintException ex) {
 			// if we can't create a valid protocol object from the form data,
 			// assume the user has changed something...
@@ -1074,7 +1080,11 @@ public class MainController implements Initializable {
 	
 	@FXML
 	private void handleCheckProtocolButton() {
-		
+		try {
+			createProtocolFromFormData();
+		} catch (UIConstraintException ex) {
+			handleError(ex.getTitle(), "Problem: " + ex.getMessage());
+		}
 	}
 			
 	private class UIConstraintException extends Exception {
