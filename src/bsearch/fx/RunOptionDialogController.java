@@ -8,6 +8,8 @@ import bsearch.app.BehaviorSearch.RunOptions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
@@ -68,14 +70,14 @@ public class RunOptionDialogController {
 				.setConverter(new NumericStringConverterWithErrorChecking(threadNumSpinner.getValueFactory().getConverter()));
 		iniRanSeedSpinner.getValueFactory()
 				.setConverter(new NumericStringConverterWithErrorChecking(iniRanSeedSpinner.getValueFactory().getConverter()));
-		TextField searchesNumSpinnerEd = searchesNumSpinner.getEditor();
-		FormValidationUtils.enforceNumericInput(searchesNumSpinnerEd, false);
+		//TextField searchesNumSpinnerEd = searchesNumSpinner.getEditor();
+		FormValidationUtils.enforceNumericInput(searchesNumSpinner.getEditor(), false);
 		FormValidationUtils.enforceNumericInput(startingSearchIDSpinner.getEditor(), false);
 		FormValidationUtils.enforceNumericInput(iniRanSeedSpinner.getEditor(), false);
 		FormValidationUtils.enforceNumericInput(threadNumSpinner.getEditor(), false);
 		this.main = main;
 		//http://stackoverflow.com/questions/32340476/manually-typing-in-text-in-javafx-spinner-is-not-updating-the-value-unless-user
-		
+		/*
 		searchesNumSpinner.focusedProperty().addListener((s, ov, nv) -> {
 		    if (nv) return;
 		    commitEditorText(searchesNumSpinner);
@@ -91,7 +93,7 @@ public class RunOptionDialogController {
 		iniRanSeedSpinner.focusedProperty().addListener((s, ov, nv) -> {
 		    if (nv) return;
 		    commitEditorText(iniRanSeedSpinner);
-		});
+		}); */
 		
 	}
 
@@ -126,6 +128,12 @@ public class RunOptionDialogController {
 	}
 
 	public void updateOptionsAndStartSearch(ActionEvent event) {
+		if(searchesNumSpinner.getEditor().getText().isEmpty() || startingSearchIDSpinner.getEditor().getText().isEmpty() || iniRanSeedSpinner.getEditor().getText().isEmpty() || threadNumSpinner.getEditor().getText().isEmpty()) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setContentText("All fields must be filled in.");
+			alert.showAndWait();
+		}  else {
 		runOptions.outputStem = outputPathTextField.getText();
 		runOptions.numSearches = (Integer) searchesNumSpinner.getValue();
 		runOptions.firstSearchNumber = (Integer) startingSearchIDSpinner.getValue();
@@ -139,7 +147,7 @@ public class RunOptionDialogController {
 		Stage thisStage = (Stage) source.getScene().getWindow();
 
 		thisStage.close();
-		main.displayProgressDialog();
+		main.displayProgressDialog();}
 	}
 
 	public void cancel(ActionEvent event) {
