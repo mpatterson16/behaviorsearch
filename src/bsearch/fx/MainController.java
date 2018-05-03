@@ -89,6 +89,8 @@ public class MainController implements Initializable {
 	private Button runButton;
 	@FXML
 	private Button browseModelButton;
+	@FXML
+	private Button checkProtocolButton;
 	
 	// components in Model tab will start with m_
 	@FXML
@@ -1068,6 +1070,11 @@ public class MainController implements Initializable {
 	@FXML
 	private void handleCondensedRemoveButton() {
 		dc_condensedTable.getItems().remove(dc_condensedTable.getSelectionModel().getSelectedItem());
+	}
+	
+	@FXML
+	private void handleCheckProtocolButton() {
+		
 	}
 			
 	private class UIConstraintException extends Exception {

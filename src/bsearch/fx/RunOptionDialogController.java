@@ -68,7 +68,11 @@ public class RunOptionDialogController {
 				.setConverter(new NumericStringConverterWithErrorChecking(threadNumSpinner.getValueFactory().getConverter()));
 		iniRanSeedSpinner.getValueFactory()
 				.setConverter(new NumericStringConverterWithErrorChecking(iniRanSeedSpinner.getValueFactory().getConverter()));
-
+		TextField searchesNumSpinnerEd = searchesNumSpinner.getEditor();
+		FormValidationUtils.enforceNumericInput(searchesNumSpinnerEd, false);
+		FormValidationUtils.enforceNumericInput(startingSearchIDSpinner.getEditor(), false);
+		FormValidationUtils.enforceNumericInput(iniRanSeedSpinner.getEditor(), false);
+		FormValidationUtils.enforceNumericInput(threadNumSpinner.getEditor(), false);
 		this.main = main;
 		//http://stackoverflow.com/questions/32340476/manually-typing-in-text-in-javafx-spinner-is-not-updating-the-value-unless-user
 		

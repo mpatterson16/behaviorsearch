@@ -462,5 +462,10 @@
             <Button fx:id="browseModelButton" mnemonicParsing="false" onAction="#browseModelFileAction" prefHeight="26.0" prefWidth="140.0" text="Browse for model" BorderPane.alignment="CENTER" />
          </right>
       </BorderPane>
+      <Button fx:id="checkProtocolButton" layoutX="486.0" layoutY="448.0" mnemonicParsing="false" onAction="#handleCheckProtocolButton" text="Check Protocol">
+         <tooltip>
+            <Tooltip text="Check for errors in input" />
+         </tooltip>
+      </Button>
    </children>
 </AnchorPane>

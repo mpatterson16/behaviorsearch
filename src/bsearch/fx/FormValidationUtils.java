@@ -3,6 +3,7 @@ package bsearch.fx;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 
 public class FormValidationUtils {
