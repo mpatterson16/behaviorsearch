@@ -2,6 +2,7 @@ package bsearch.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -203,13 +204,21 @@ public class GeneralUtils {
 		return dataCollectionList;
 	}
 	
-	public static List<String> findInvalidVariableNames(String code, Set<String> validVariables) {
+	public static List<String> findInvalidVariableNames(Collection<String> codeCollection, Set<String> validVariables) {
 		
 		// find things that look like @{...} inside code, and check if ... is in the list of validVariables
 		// collect a list of all the invalid variables to return.
 		// if you want to use regex, 
 		//code.
-		return null;
+		List<String> invalidVariables = new ArrayList<String>();
+		for(String code: codeCollection) {
+			int startingIndex = code.indexOf('{');
+			String varName = code.substring(startingIndex + 1, code.length() - 1);
+			if(!validVariables.contains(varName)) {
+				invalidVariables.add(varName);
+			}
+		}
+		return invalidVariables;
 	}
 
 

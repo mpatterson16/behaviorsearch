@@ -621,7 +621,14 @@ public class MainController implements Initializable {
 		//TODO: validate that condensed codes refer to raw variable names
 		//      and EVERY objInfo.fitnessCombineReplications refers to condensed variable names
 		//      Throw new UIConstraintException whenever there's a problem
-		rawVariableMap.k
+		//rawVariableMap.keySet();
+		
+
+		List<String> invalidVariables = GeneralUtils.findInvalidVariableNames(condensedVariableMap.values(), rawVariableMap.keySet());
+		if(!invalidVariables.isEmpty()) {
+			throw new UIConstraintException("There are nonexistant variables being referenced in the condensed measures: " + invalidVariables, "Condensed Variable Error");
+		}
+		
 		
 		SearchProtocolInfo protocol = new SearchProtocolInfo(browseModelField.getText(),
 				Arrays.asList(m_paramSpecsArea.getText().split("\n")), 
@@ -702,7 +709,7 @@ public class MainController implements Initializable {
 		}
 		try {
 			
-			jsonStr = rotocolFromFormData().toJSONString();
+			jsonStr = createProtocolFromFormData().toJSONString();
 		} catch (UIConstraintException ex) {
 			// if we can't create a valid protocol object from the form data,
 			// assume the user has changed something...

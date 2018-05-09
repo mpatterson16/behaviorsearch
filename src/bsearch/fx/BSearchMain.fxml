@@ -261,28 +261,28 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="so_deltaField" disable="true" layoutX="238.0" layoutY="255.0">
+                              <TextField fx:id="so_deltaField" disable="true" layoutX="278.0" layoutY="255.0">
                                  <tooltip>
                                     <Tooltip text="How much should be subtracted from the parameter's value, to get the measured change?" />
                                  </tooltip>
                               </TextField>
-                              <Label fx:id="so_deltaLabel" disable="true" layoutX="212.0" layoutY="259.0" text="Δ = " />
-                              <Label fx:id="so_wrtLabel" disable="true" layoutX="14.0" layoutY="259.0" text="w.r.t." />
-                              <ChoiceBox fx:id="so_wrtBox" disable="true" layoutX="46.0" layoutY="255.0" prefWidth="150.0">
+                              <Label fx:id="so_deltaLabel" disable="true" layoutX="247.0" layoutY="259.0" text="Δ = " />
+                              <Label fx:id="so_wrtLabel" disable="true" layoutX="48.0" layoutY="259.0" text="w.r.t." />
+                              <ChoiceBox fx:id="so_wrtBox" disable="true" layoutX="77.0" layoutY="255.0" prefWidth="150.0">
                                  <tooltip>
                                     <Tooltip text="Which parameter should be varied by a small amount to see how much change results?" />
                                  </tooltip>
                               </ChoiceBox>
-                              <ChoiceBox fx:id="so_objectiveTypeBox" layoutX="181.0" layoutY="105.0" prefWidth="150.0">
+                              <ChoiceBox fx:id="so_objectiveTypeBox" layoutX="277.0" layoutY="107.0" prefWidth="150.0">
                                  <tooltip>
                                     <Tooltip text="[placeholder]" />
                                  </tooltip></ChoiceBox>
-                              <CheckBox fx:id="so_fitnessDerivativeUseAbsCheckBox" disable="true" layoutX="181.0" layoutY="220.0" mnemonicParsing="false" text="Use ABS value of derivative?">
+                              <CheckBox fx:id="so_fitnessDerivativeUseAbsCheckBox" disable="true" layoutX="224.0" layoutY="220.0" mnemonicParsing="false" text="Use ABS value of derivative?">
                                  <tooltip>
                                     <Tooltip text="You might want to take the absolute value if you don't care about the direction of the measured change... e.g., for trying to find phase transitions" />
                                  </tooltip>
                               </CheckBox>
-                              <CheckBox fx:id="so_takeDerivativeCheckBox" layoutX="13.0" layoutY="221.0" mnemonicParsing="false" text="Take derivative?">
+                              <CheckBox fx:id="so_takeDerivativeCheckBox" layoutX="65.0" layoutY="220.0" mnemonicParsing="false" text="Take derivative?">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -290,7 +290,7 @@
                                     <Tooltip text="Instead of using the measure you've specified, use the *change* in that measure (with respect to a certain parameter) for your objective function." />
                                  </tooltip>
                               </CheckBox>
-                              <Label layoutX="25.0" layoutY="171.0" prefHeight="19.0" prefWidth="151.0" text="Objective function code:" wrapText="true">
+                              <Label layoutX="51.0" layoutY="172.0" prefHeight="19.0" prefWidth="151.0" text="Objective function code:" wrapText="true">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -309,21 +309,22 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="so_objectiveNameField" layoutX="181.0" layoutY="64.0" prefHeight="26.0" prefWidth="201.0">
+                              <TextField fx:id="so_objectiveNameField" layoutX="227.0" layoutY="64.0" prefHeight="26.0" prefWidth="201.0">
                                  <tooltip>
                                     <Tooltip text="[placeholder]" />
                                  </tooltip></TextField>
-                              <Label layoutX="20.0" layoutY="190.0" text=" (combines replicate runs)" />
+                              <Label layoutX="53.0" layoutY="190.0" text=" (combines replicate runs)" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ListView fx:id="so_objectiveChoiceList" layoutX="26.0" layoutY="51.0" prefHeight="187.0" prefWidth="200.0">
+                              <ListView fx:id="so_objectiveChoiceList" layoutX="26.0" layoutY="51.0" prefHeight="187.0" prefWidth="268.0">
                                  <tooltip>
                                     <Tooltip text="[placeholder]" />
-                                 </tooltip></ListView>
-                              <Button fx:id="so_addObjectiveButton" layoutX="26.0" layoutY="247.0" mnemonicParsing="false" onAction="#actionAddNewObjective" prefHeight="51.0" prefWidth="98.0" text="ADD NEW Objective" textAlignment="CENTER" wrapText="true" />
-                              <Button fx:id="so_removeObjectiveButton" layoutX="141.0" layoutY="247.0" mnemonicParsing="false" onAction="#actionRemoveObjective" prefHeight="48.0" prefWidth="85.0" text="REMOVE Objective" textAlignment="CENTER" wrapText="true" />
+                                 </tooltip>
+                              </ListView>
+                              <Button fx:id="so_addObjectiveButton" layoutX="41.0" layoutY="248.0" mnemonicParsing="false" onAction="#actionAddNewObjective" prefHeight="51.0" prefWidth="98.0" text="ADD NEW Objective" textAlignment="CENTER" wrapText="true" />
+                              <Button fx:id="so_removeObjectiveButton" layoutX="195.0" layoutY="249.0" mnemonicParsing="false" onAction="#actionRemoveObjective" prefHeight="48.0" prefWidth="85.0" text="REMOVE Objective" textAlignment="CENTER" wrapText="true" />
                               <Label layoutX="27.0" layoutY="23.0" text="Choose objective to edit:">
                                  <font>
                                     <Font name="System Bold" size="13.0" />

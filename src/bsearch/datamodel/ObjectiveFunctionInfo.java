@@ -37,6 +37,7 @@ public class ObjectiveFunctionInfo {
 	}
 		
 	public String toString() {
-		return name + " (" + objectiveType.toString().substring(0,3) + ")" ;
+		return name + " (" + objectiveType.toString().substring(0,3) + " " + fitnessDerivativeParameter + 
+				fitnessCombineReplications + ")";
 	}
 }
