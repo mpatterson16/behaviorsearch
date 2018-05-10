@@ -624,9 +624,21 @@ public class MainController implements Initializable {
 		//rawVariableMap.keySet();
 		
 
-		List<String> invalidVariables = GeneralUtils.findInvalidVariableNames(condensedVariableMap.values(), rawVariableMap.keySet());
-		if(!invalidVariables.isEmpty()) {
-			throw new UIConstraintException("There are nonexistant variables being referenced in the condensed measures: " + invalidVariables, "Condensed Variable Error");
+		List<String> invalidRawVariables = GeneralUtils.findInvalidVariableNames(condensedVariableMap.values().toArray(), rawVariableMap.keySet());
+		List<String> invalidCondensedVariables = GeneralUtils.findInvalidVariableNames(so_objectiveChoiceList.getItems().toArray(), condensedVariableMap.keySet());
+		if(invalidRawVariables == null || invalidCondensedVariables == null) {
+			throw new UIConstraintException("Improper variable syntax. Condensed and objective tables must have format containing \"@{...}\"", "Syntax Error");
+		} else if(!invalidRawVariables.isEmpty() || !invalidCondensedVariables.isEmpty()) {
+			String msg = "";
+			if(!invalidRawVariables.isEmpty()) {
+				msg = "There are nonexistant variables being referenced in the condensed measures: " + invalidRawVariables + "\n";
+			}
+			if(!invalidCondensedVariables.isEmpty()) {
+				msg = msg.concat("There are nonexistant variables being referenced in the objective list: " + invalidCondensedVariables);
+			}
+			throw new UIConstraintException(msg, "Variable Error");
+		} else {
+			System.out.println("something's wrong");
 		}
 		
 		
