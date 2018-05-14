@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import bsearch.app.BehaviorSearchException;
 import bsearch.fx.DataCollectionTableRow;
@@ -204,29 +206,15 @@ public class GeneralUtils {
 		return dataCollectionList;
 	}
 	
-	public static List<String> findInvalidVariableNames(Object[] codeObjectArray, Set<String> validVariables) {
-		
-		// find things that look like @{...} inside code, and check if ... is in the list of validVariables
-		// collect a list of all the invalid variables to return.
-		// if you want to use regex, 
-		//code.
-		String[] codeArray = new String[codeObjectArray.length];
-		for(int i = 0; i < codeObjectArray.length; i++) {
-			codeArray[i] = codeObjectArray[i].toString();
-		}
+	public static List<String> findInvalidVariableNames(String code, Set<String> validVariables) {
 		List<String> invalidVariables = new ArrayList<String>();
-		for(String code: codeArray) {
-			if(code.contains("@{") && code.contains("}")) {
-				int startingInd = code.indexOf('{');
-				int endingInd = code.indexOf('}');
-				String varName = code.substring(startingInd + 1, endingInd);
-				if(!validVariables.contains(varName)) {
-					invalidVariables.add(varName);
-				}
-			} else {
-				return null;
+		Pattern pattern = Pattern.compile("@\\{(.*?)\\}");
+		Matcher matcher = pattern.matcher(code);
+		while(matcher.find()) {
+			String varName = matcher.group(1);
+			if(!validVariables.contains(varName)) {
+				invalidVariables.add(varName);
 			}
-			
 		}
 		return invalidVariables;
 	}

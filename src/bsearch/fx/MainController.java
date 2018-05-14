@@ -623,22 +623,32 @@ public class MainController implements Initializable {
 		//      Throw new UIConstraintException whenever there's a problem
 		//rawVariableMap.keySet();
 		
-
-		List<String> invalidRawVariables = GeneralUtils.findInvalidVariableNames(condensedVariableMap.values().toArray(), rawVariableMap.keySet());
-		List<String> invalidCondensedVariables = GeneralUtils.findInvalidVariableNames(so_objectiveChoiceList.getItems().toArray(), condensedVariableMap.keySet());
-		if(invalidRawVariables == null || invalidCondensedVariables == null) {
-			throw new UIConstraintException("Improper variable syntax. Condensed and objective tables must have format containing \"@{...}\"", "Syntax Error");
-		} else if(!invalidRawVariables.isEmpty() || !invalidCondensedVariables.isEmpty()) {
-			String msg = "";
-			if(!invalidRawVariables.isEmpty()) {
-				msg = "There are nonexistant variables being referenced in the condensed measures: " + invalidRawVariables + "\n";
+		String variableErrorMsg = "";
+		for(String measureName: condensedVariableMap.keySet()) {
+			String measureCode = condensedVariableMap.get(measureName);
+			
+			List<String> invalidRawVariables = GeneralUtils.findInvalidVariableNames(measureCode, rawVariableMap.keySet());
+			if (invalidRawVariables == null) {
+				throw new UIConstraintException("CONDENSED measure named " + measureName + " is malformed! (Variable format should be \"@{...}\")", "Improper variable syntax");
+			} else if (!invalidRawVariables.isEmpty()) {
+				variableErrorMsg += "\n\nCondensed measure " + measureName + " refers to variable(s) " + invalidRawVariables + " which are not found among the RAW measures."; 
 			}
-			if(!invalidCondensedVariables.isEmpty()) {
-				msg = msg.concat("There are nonexistant variables being referenced in the objective list: " + invalidCondensedVariables);
+		}
+		
+		for(ObjectiveFunctionInfo objInfo: so_objectiveChoiceList.getItems()) {
+			String objName = objInfo.name;
+			String objCode = objInfo.fitnessCombineReplications;
+			
+			List<String> invalidCondensedVariables = GeneralUtils.findInvalidVariableNames(objCode, condensedVariableMap.keySet());
+			if (invalidCondensedVariables == null) {
+				throw new UIConstraintException("OBJECTIVE named " + objName + " is malformed! (Variable format should be \"@{...}\")", "Improper variable syntax");
+			} else if (!invalidCondensedVariables.isEmpty()) {
+				variableErrorMsg += "\n\nObjective " + objName + " refers to variable(s) " + invalidCondensedVariables + " which are not found among the CONDENSED measures."; 
 			}
-			throw new UIConstraintException(msg, "Variable Error");
-		} else {
-			System.out.println("something's wrong");
+		}
+		
+		if (variableErrorMsg.length() > 0) {
+			throw new UIConstraintException(variableErrorMsg, "Variable Error(s)");
 		}
 		
 		
@@ -945,10 +955,13 @@ public class MainController implements Initializable {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle(title);
 				alert.setHeaderText(title);
-				alert.getDialogPane().setContent(new TextArea(msg1));
 				alert.setResizable(true);
-				
-				if (e!=null) {
+
+				if(e == null) {
+					TextArea problemTextArea = new TextArea(msg1);
+					problemTextArea.setWrapText(true);
+					alert.getDialogPane().setContent(problemTextArea);
+				} else {
 					// Create expandable Exception.
 					StringWriter sw = new StringWriter();
 					e.printStackTrace(new PrintWriter(sw));
