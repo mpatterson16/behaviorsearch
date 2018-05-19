@@ -207,16 +207,21 @@ public class GeneralUtils {
 	}
 	
 	public static List<String> findInvalidVariableNames(String code, Set<String> validVariables) {
+		boolean correctFormat = false;
 		List<String> invalidVariables = new ArrayList<String>();
 		Pattern pattern = Pattern.compile("@\\{(.*?)\\}");
 		Matcher matcher = pattern.matcher(code);
 		while(matcher.find()) {
+			correctFormat = true;
 			String varName = matcher.group(1);
 			if(!validVariables.contains(varName)) {
 				invalidVariables.add(varName);
 			}
 		}
-		return invalidVariables;
+		if(correctFormat) {
+			return invalidVariables;
+		}
+		return null;
 	}
 
 

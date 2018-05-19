@@ -1114,6 +1114,11 @@ public class MainController implements Initializable {
 	private void handleCheckProtocolButton() {
 		try {
 			createProtocolFromFormData();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Protocol Check Successful");
+			alert.setHeaderText("Protocol Check Successful");
+			alert.setContentText("Check Successful. No errors.");
+			alert.showAndWait();
 		} catch (UIConstraintException ex) {
 			handleError(ex.getTitle(), "Problem: " + ex.getMessage());
 		}
